@@ -1,0 +1,248 @@
+<%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+	<c:if test="${mc==null}">
+	<script language="javascript">
+            location.href="<c:url value='/Show.jsp' />";
+        </script>
+    </c:if>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+    	<base href="${basePath}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="<c:url value="/images/css/style.css" />" rel="stylesheet"
+			type="text/css" />
+		<title>网站首页</title>
+		<script type="text/javascript" src="<c:url value="/js/user.js" />"></script>
+		<script language="javascript">
+		function buyFood(fid) {
+			location.href="<c:url value='/servlet/CartServlet?fromPage=/Cart.jsp'/>&fid=" + fid + "&act=buyFood";
+		}
+		</script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="globalHeader">
+				<p id="logo">
+					<a href="#"><img src="<c:url value="/images/logo.gif" />"
+							alt="logo" /> </a>
+				</p>
+  <ul id="globalTopNav">
+      <li><a href="<c:url value='/User_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/User_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/User/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/User/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+			</div>
+			<div id="globalNav">
+				<ul>
+					<li id="currentPage">
+						<a href="<c:url value='/Show.jsp' />">首页</a>
+					</li>
+					<li>
+						<a href="<c:url value='/User/Change_Info.jsp' />">会员中心</a>
+					</li>
+					<li>
+						<a href="<c:url value='/User/Show_Orderlist.jsp' />">查看订单</a>
+					</li>
+				</ul>
+			</div>
+			<div id="ECS_MEMBERZONE">
+				<c:choose>
+					<c:when test="${sessionScope.user ne null}">
+						<span class="welcome">您好，${sessionScope.user.suser}，欢迎回来!</span>
+						<span class="btnList"><a
+							href="<c:url value='/User/Change_Info.jsp' />">进入用户中心</a><a
+							href="<c:url value='/servlet/LogoutServlet?act=user' />">退出</a> </span>
+					</c:when>
+					<c:when test="${sessionScope.user==null}">
+						<form id="ECS_LOGINFORM" name="loginUser" method="post"
+							action="<c:url value="/servlet/LoginServlet" />"
+							onsubmit="return checkLoginForm();">
+							用户名：
+							<input name="suser" type="text" size="8" tabindex="1"
+								value="${cookie.suser.value}" class="textInput textInputSign" />
+							密码：
+							<input name="spwd" type="password" size="10" tabindex="2"
+								class="textInput textInputSign" />
+							验证码：
+							<input name="rand" type="text" class="textInput textCaptcha"
+								size="4" maxlength="4" />
+							&nbsp;
+							<img src="<c:url value="/inc/rand.jsp" />"
+								onclick="this.src='<c:url value="/inc/rand.jsp" />'"
+								class="imgrand" />
+							<input type="image"
+								src="<c:url value="/images/btn_signin.gif" />" />
+							<input type="hidden" name="fromPage"
+								value="<c:url value="/Show.jsp" />" />
+							<input type="hidden" name="msg"
+								value="<c:url value="/msg.jsp" />" />
+							<span onClick="javascript:location.href='<c:url value='/User_Reg.jsp' />'" style=" cursor:hand;">
+                            <img src="<c:url value="/images/btn_register.gif" />" alt="" /></span>
+							<a href="#" id="textForget">&gt;&gt;您忘记密码了吗？</a>
+						</form>
+					</c:when>
+				</c:choose>
+			</div>
+			<div id="globalLeft">
+				<div id="globalSearch" class="moduleBg">
+					<h3>
+						<img src="<c:url value="/images/search_title.png" />" alt="Search" />
+					</h3>
+					<form id="searchForm" name="searchForm" method="get"
+						action="<c:url value="/servlet/MainServlet" />">
+						<select name="maxType" id="maxType" onChange="maxChange();"
+							style="vertical-align:middle;">
+							<option value="">
+								所有分类
+							</option>
+							<c:forEach var="mcTypeMap" items="${mcTypeList}">
+								<c:forEach var="me" items="${mcTypeMap}">
+									<c:set var="maxType" value="${me.key}" />
+									<c:choose>
+										<c:when test="${typeMax==maxType.nid}">
+											<option value="${maxType.nid}" selected="selected">
+												${maxType.sname}
+											</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${maxType.nid}">
+												${maxType.sname}
+											</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</c:forEach>
+						</select>
+						<select name="minType" id="minType" style="vertical-align:middle;"></select>
+						<input type="hidden" name="fromPage" value="/Show.jsp" />
+						<input name="skey" type="text" id="keyword" value="${param.skey}" alt="请输入商品名称,支持模糊查询!" class="textInput" />
+						<input type="image" src="<c:url value="/images/btn_search.gif" />"
+							class="vAlign" />
+						<a href="#" id="adSearch" class="vAlign">&gt;&gt;高级搜索</a>
+						<input type="hidden" name="curPage" value="1" />
+					</form>
+				</div>
+				<script type="text/javascript">
+					window.onload = function()
+					{
+					  fixpng();
+					  minChange();
+					}
+				</script>
+                <div id="ECS_CARTINFO" class="moduleBg">
+					<img src="<c:url value="/images/icon_cart.png" />" alt="" />
+					<a href="<c:url value="/Cart.jsp" />" title="查看购物车">您的购物车中有 ${mcCart.mcCount} 件商品，总计金额 ￥${mcCart.totalPrice}元。</a>
+				</div>
+				<div id="categoryTree" class="globalModule">
+					<h3>
+						商品分类
+					</h3>
+					<ul>
+						<c:forEach var="mcTypeMap" items="${mcTypeList}">
+							<c:forEach var="me" items="${mcTypeMap}">
+								<c:set var="maxType" value="${me.key}" />
+								<c:set var="minList" value="${me.value}" />
+								<li>
+									<h4>
+										<a href="#"
+											onclick="mcTypeOnClick('maxType',${maxType.nid});return false;">${maxType.sname}
+											&gt;&gt;</a>
+									</h4>
+									<c:forEach var="minType" items="${minList}">
+										<a href="#"
+											onclick="mcTypeOnClick('minType',${minType.nid});return false;">${minType.sname}</a>
+										<br />
+									</c:forEach>
+								</li>
+							</c:forEach>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+    <div id="globalBigRight">  
+		<div id="itemAllInfo" class="globalModule">
+		<br />
+        <div id="itemPic">
+        <a href="<c:url value='/mcimg/${mc.mcBean.simg}' />" target="_blank">
+        <img src="<c:url value="/mcimg/${mc.mcBean.simg}" />" alt="点击图片查看大图" class="thumb" style="width:305px;height:275px;" />
+        </a>
+        <span class="waterMark"><img src="<c:url value="/images/watermark_best.png" />" /></span>
+        <ul id="itemGallery"></ul>
+        </div>
+        <div id="itemInfoList">
+          <h2>${mc.mcBean.sname}</h2>
+          <ul class="line">
+          <li>商品编号：&nbsp;${mc.mcBean.nid}</li>
+          </ul>
+          <ul class="line">
+          <li>商品名称：&nbsp;${mc.mcBean.sname}</li>
+          </ul>
+		  <ul class="line">
+          <li>大类编号：&nbsp;${mc.mcBean.nmaxid}</li>
+          </ul>
+		  <ul class="line">
+          <li>小类编号：&nbsp;${mc.mcBean.nminid}</li>
+          </ul>
+          <ul class="line">
+          <li>本店售价：<span class="goodsPrice" id="ECS_SHOPPRICE">￥${mc.mcBean.nprice}元</span></li>
+          </ul>
+		  <ul class="line">
+          <li>是否缺货：&nbsp;${mc.mcBean.smctag}</li>
+          </ul>
+          <ul class="line">
+          <li>上架时间：&nbsp;${mc.mcBean.dcdate}</li>
+          </ul>
+          <ul>
+          <li id="itemBtnList">
+          <input type="image" src="<c:url value='/images/btn_addcart.gif' />" onClick="buyMc(${mc.mcBean.nid});" alt="点击购买，将商品加入购物车" />
+          </li>
+          </ul>
+        </div>
+      </div>
+      <div id="globalMiddle">
+        <div class="TabControl" id="globalTab">
+          <ul class="TabBar">
+           <li>商品描述</li>
+          </ul>
+          <div class="globalModule TabPages">
+          <div id="globalTags" class="TabPage">
+                <p>${mc.mcBean.sdescription}</p>
+          </div>
+          </div>
+        </div>
+	</div>
+</div>
+    </div>
+		<div id="globalFooter">
+			<div id="footerLine">
+				<img src="<c:url value="/images/footer_line.gif" />" alt="" />
+			</div>
+			<p id="footerNav">
+				<a href="#">免责条款</a> |
+				<a href="#">隐私保护</a> |
+				<a href="#">咨询热点</a> |
+				<a href="#">联系我们</a> |
+				<a href="#">公司简介</a> |
+				<a href="#">预留功能</a> |
+				<a href="<c:url value="/Admin_Login.jsp" />">后台管理</a>
+			</p>
+		</div>
+		<script language="javascript">
+		<!--
+			var username_empty = "用户名不能为空。";
+			var password_empty = "登录密码不能为空。";
+			var rand_msg = "验证码只能是4位数!";
+		-->
+		</script>
+	</body>
+</html>

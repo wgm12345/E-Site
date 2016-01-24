@@ -1,0 +1,84 @@
+package com.es.tools;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class SqlOp {
+	String url;
+	String name;
+	String pwd;
+	String driveName;
+	Connection conn;
+	public SqlOp(String dbName,String username,String password) {
+		url="jdbc:mysql://localhost:3306/"+dbName;
+		name=username;
+		pwd=password;
+		conn=null;
+
+	}
+	public boolean connect()
+	{
+		driveName="com.mysql.jdbc.Driver";
+		try {
+			Class.forName(driveName);
+			conn=DriverManager.getConnection(url, name, pwd);
+		} catch (Exception e) {
+			e.printStackTrace();	
+		}
+		if(conn!=null)
+			return true;
+		else 
+			return false;		
+	}
+	public boolean createtable(String sql)
+	{
+		 boolean result=false;
+		 Statement mState;
+		try {
+			mState = conn.createStatement();
+			 result=mState.execute(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(result)
+			return true;
+		else 
+			return false;
+
+	}
+	public boolean insert(String sql)
+	{
+		int result = 0;
+		try {
+			Statement mState=conn.createStatement();
+			result=mState.executeUpdate(sql);
+			//result=mState.execute(sql);
+			System.out.println(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(result>0)
+			return true;
+		else
+			return false;
+	}
+	public ResultSet select(String sql)
+	{	ResultSet result = null;
+		try {
+			Statement mState=conn.createStatement();
+			result=mState.executeQuery(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public static void main(String[] args) {
+		SqlOp test=new SqlOp("testmysql", "root","123456");
+		if(test.connect())
+			System.out.println("连接成功");;
+	}
+}

@@ -1,0 +1,131 @@
+<%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<c:choose>
+	<c:when test="${not empty param.success}">
+		<c:set var="success" value="${param.success}" scope="request" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="success" value="Customer_Login.jsp" scope="request" />
+		<c:if test="${sessionScope.user ne null}">
+			<c:redirect url="Customer/Change_Info.jsp" />
+		</c:if>
+	</c:otherwise>
+</c:choose>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<title>用户登陆</title>
+		<script type="text/javascript" src="<c:url value='/js/user.js ' />"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="globalHeader">
+				<p id="logo">
+					<a href="#"><img src="<c:url value='/images/logo.jpg' />" alt="logo" />
+					</a>
+				</p>
+  <ul id="globalTopNav">
+      <li><a href="<c:url value='/Customer_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/Customer_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li><a href="<c:url value='/Seller_Login.jsp' />" >店家管理</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+			</div>
+			<div id="globalNav">
+				<ul>
+					<li id="currentPage">
+						<a href="<c:url value='/Show.jsp' />">首页</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a>
+					</li>
+				</ul>
+			</div>
+			<div id="urHere" class="globalModule globalFrame"
+				style="margin-top:10px">
+				<h3>
+					当前位置:
+					<a href="<c:url value='/Show.jsp' />">首页</a>
+					<code>
+						&gt;
+					</code>
+					用户中心
+				</h3>
+			</div>
+			<div id="globalLogin" class="globalModule globalFrame">
+				<h3>
+					会员登陆
+				</h3>
+				<form name="loginUser" action="<c:url value='/servlet/LoginServlet' />"
+					method="post" onSubmit="return checkLoginForm();">
+					<div class="globalModuleContent">
+						<ul class="login">
+							<li>
+								用户名:
+								<input name="suser" type="text" class="textInput"
+									value="${cookie.suser.value}" />
+							</li>
+							<li>
+								密&nbsp;&nbsp;&nbsp;&nbsp;码:
+								<input name="spwd" type="password" class="textInput" />
+							</li>
+							<li>
+								验证码:
+								<input name="rand" type="text" class="textInput2" size="4"
+									maxlength="4" />
+								&nbsp;&nbsp;
+								<img src="<c:url value='/inc/rand.jsp' />" onClick="this.src='<c:url value='/inc/rand.jsp' />'"
+									class="imgrand" />
+								&nbsp;看不清?请点击图片更换
+							</li>
+							<li class="submitli">
+								<input type="image" name="login" src="<c:url value='/images/btn_signin.gif' />"
+									class="vAlign" />
+								<a href="<c:url value='/Customer_Reg.jsp' />"><img src="<c:url value='/images/btn_register.gif' />"
+										alt="注册新会员" class="vAlign" />
+								</a>
+								<input type="hidden" name="fromPage" value="${success}" />
+								<input type="hidden" name="msg" value="/msg.jsp" />
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div id="globalFooter">
+				<div id="footerLine">
+					<img src="<c:url value='/images/footer_line.gif' />" />
+				</div>
+				<p id="footerNav">
+					<a href="#">免责条款</a> |
+					<a href="#">隐私保护</a> |
+					<a href="#">咨询热点</a> |
+					<a href="#">联系我们</a> |
+					<a href="#">公司简介</a> |
+					<a href="#">预留功能</a> |
+					<a href="<c:url value='/Admin_Login.jsp' />">后台管理</a>
+				</p>
+			</div>
+		</div>
+<script language="javascript">
+  <!--
+		var username_empty = "用户名不能为空。";
+		var password_empty = "登录密码不能为空。";
+		var rand_msg = "验证码只能是4位数!";
+	-->
+</script>
+	</body>
+</html>

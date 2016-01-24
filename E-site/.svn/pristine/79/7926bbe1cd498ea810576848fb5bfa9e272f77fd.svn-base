@@ -1,0 +1,152 @@
+<%@ page language="java" contentType="text/html;charset=gb2312" %>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld" %>
+<c:if test="${orderList==null}">
+	<c:redirect url="/servlet/OrderManageServlet?act=orderList&fromPage=/Seller/Order_List.jsp&curPage=1"></c:redirect>
+</c:if>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	<title>管理中心 - 订单列表 </title>
+	<link href="<c:url value="/Seller/styles/general.css" />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value="/Seller/styles/main.css" />" rel="stylesheet" type="text/css" />
+    <script language="javascript" src="<c:url value="/js/calendar.js" />"></script>
+    <script language="javascript">
+		function pagingOnClick(num){
+			if(num==1){
+				searchForm.curPage.value=1;
+			}
+			if(num==2){
+				searchForm.curPage.value=${curPage} - 1;
+			}
+			if(num==3){
+				searchForm.curPage.value=${curPage} + 1;
+			}
+			if(num==4){
+				searchForm.curPage.value=${pageCount};
+			}
+			searchForm.submit();
+		}
+		
+		function selected(sstatus) {
+			if(sstatus==null) {
+				searchForm.sstatus.options[0].selected=true;
+			} else if(sstatus=="0") {
+				searchForm.sstatus.options[1].selected=true;
+			} else if(sstatus=="1") {
+				searchForm.sstatus.options[2].selected=true;
+			} else if(sstatus=="2") {
+				searchForm.sstatus.options[3].selected=true;
+			}
+		}
+		
+		function showOrderItem(orderId){
+			location.href="OrderManageServlet?act=orderItem&fromPage=/Seller/Order_Item.jsp&orderId=" + orderId;
+		}
+		
+		function auditOrder(orderId){
+			location.href="OrderManageServlet?act=orderItem&fromPage=/Seller/Order_Auditorder.jsp&orderId=" + orderId;
+		}
+		
+		function checkOrderId() {
+			var frm=document.forms['searchForm'];
+			var orderId=frm.elements['orderId'].value;
+			var order = /[0-9]+$/;
+			if(!order.test(orderId) || orderId.length==0) {
+				alert("订单编号只能为数字");
+				searchForm.orderId.focus();
+				return false;
+			}
+		}
+	</script>
+</head>
+<body>
+<h1>
+<span><a href="#"> 管理中心</a>  - 订单列表 </span>
+</h1>
+<div class="form-div">
+  <form action="<c:url value="/servlet/OrderManageServlet"/>" name="searchForm" onsubmit="return checkOrderId();">
+    <img src="<c:url value="/Seller/images/icon_search.gif" />" width="26" height="22" border="0" alt="SEARCH" />
+    &nbsp;所属用户 &nbsp;<input type="text" name="scuser" value="${scuser}" />
+    &nbsp;订单编号 &nbsp;<input type="text" name="orderId" value="${orderId}" />
+    <br/><img src="<c:url value="/Seller/images/icon_search.gif" />" width="26" height="22" border="0" alt="SEARCH" />
+    &nbsp;审核状态 &nbsp;<select name="sstatus" style="width:80px;" >
+        <option value="">所有记录</option>
+        <option value="0">通过审核</option>
+        <option value="1">审核失败</option>
+        <option value="2">等待审核</option>
+    </select>
+    <input type="submit" value=" 搜索 " class="button" />
+    <input type="hidden" name="act" value="orderList" />
+    <input type="hidden" name="fromPage" value="/Seller/Order_List.jsp" />
+    <input type="hidden" name="curPage" value="1" />
+  </form>
+</div>
+<div class="list-div" id="listDiv">
+<table cellpadding="0" cellspacing="1">
+  <tr>
+    <th>订单编号</th>
+    <th>所属用户</th>
+    <th>真实姓名</th>
+    <th>下单时间</th>
+    <th>审核情况</th>
+    <th>操作</th>
+  </tr>
+  <c:forEach var="orderBean" items="${orderList}">
+    <tr>
+    <td align="center">${orderBean.oid}</td>
+    <td align="center">${orderBean.cid}</td>
+    <td align="center">${orderBean.oname}</td>
+    <td align="center">${orderBean.orderdate}</td>
+    <td align="center" style="color:#FF0000;">${orderBean.ostatus}</td>
+   	<td align="center">
+   		<a href="#" onClick="showOrderItem('${orderBean.oid}');return false;">订单详情</a>&nbsp;
+   		<a href="#" onClick="auditOrder('${orderBean.oid}');return false;">审核订单</a>
+   	</td>
+ 	</tr>
+  </c:forEach>
+    <tr>
+      <td align="right" nowrap="true" colspan="8" height="22px">
+            <div id="turn-page">
+        总计  <span id="totalRecords">${recordSize}</span>
+        个记录分为 <span id="totalPages">${pageCount}</span>
+        页当前第 <span id="pageCurrent">${curPage}</span>
+        页 
+        <span id="page-link">
+        <c:choose>
+		<c:when test="${curPage==1}">
+		<span>首页</span>
+		<span>上一页</span>
+		</c:when>
+		<c:otherwise>
+		<a href="#" onClick="pagingOnClick(1);return false;" >首页</a>
+		<a href="#" onClick="pagingOnClick(2);return false;" >上一页</a>
+		</c:otherwise>
+		</c:choose>
+		<c:choose>
+		<c:when test="${curPage==pageCount}">
+		<span>下一页</span>
+		<span>尾页</span>
+		</c:when>
+		<c:otherwise>
+		<a href="#" onClick="pagingOnClick(3);return false;" >下一页</a>
+		<a href="#" onClick="pagingOnClick(4);return false;" >尾 页</a>
+		</c:otherwise>
+		</c:choose>
+        </span></div></td>
+  </tr>
+</table>
+		<script langauge="javascript">
+            window.onload = function()
+            {
+              selected(${sstatus});
+            }
+        </script>
+</div>
+<div id="footer">版权所有 &copy;两把刷子小组</div>
+</body>
+</html>

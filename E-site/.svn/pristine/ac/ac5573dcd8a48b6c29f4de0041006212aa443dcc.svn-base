@@ -1,0 +1,217 @@
+<%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<title>订单详细页面</title>
+		<script language="javascript" src="<c:url value='/js/calendar.js' />"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="globalHeader">
+				<p id="logo">
+					<a href="#"><img src="<c:url value='/images/logo.jpg' />" alt="logo" /> </a>
+				</p>
+   <ul id="globalTopNav">
+      <li><a href="<c:url value='/Customer_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/Customer_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li><a href="<c:url value='/Seller_Login.jsp' />" >店家管理</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+			</div>
+			<div id="globalNav">
+				<ul>
+					<li id="currentPage">
+						<a href="<c:url value='/Show.jsp' />">首页</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a>
+					</li>
+				</ul>
+			</div>
+			<div id="urHere" class="globalModule globalFrame"
+				style="margin-top:10px">
+				<h3>
+					当前位置:
+					<a href="<c:url value='/Show.jsp' />">首页</a>
+					<code>
+						&gt;
+					</code>
+					订单详细信息
+				</h3>
+			</div>
+			<div id="globalLeft">
+				<div class="globalModule">
+					<h3>
+						订单详细信息
+					</h3>
+					<ul class="listStyle">
+                          <li><a href="<c:url value='/Customer/Change_Info.jsp' />">用户信息</a></li>
+                          <li><a href="<c:url value='/Customer/Change_Pass.jsp' />">修改密码</a></li>
+                          <li><a href="<c:url value='/Cart.jsp' />">查看购物车</a></li>
+                          <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />">我的订单</a></li>
+                          <li><a href="<c:url value='/servlet/LogoutServlet?act=user' />">退出</a></li>
+                     </ul>
+				</div>
+			</div>
+			<div id="globalBigRight">
+				<div class="globalModule">
+					<h3>
+						订单详细信息
+					</h3>
+					<div class="globalModuleContent">
+						<table border="0" align="center" cellpadding="0" cellspacing="0" class="tableList">
+							<tr>
+								<th>
+									所属用户：
+								</th>
+								<td>
+									${orderBean.cid}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									真实姓名：
+								</th>
+								<td>
+									${orderBean.oname}&nbsp;
+								</td>
+							</tr>
+							
+							<tr>
+								<th>
+									电子邮箱：
+								</th>
+								<td>
+									${orderBean.oemail}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									电话号码：
+								</th>
+								<td>
+									${orderBean.ophone}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									联系地址：
+								</th>
+								<td>
+									${orderBean.oaddress}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									下单时间：
+								</th>
+								<td>
+									${orderBean.orderdate}&nbsp;
+								</td>
+							</tr>
+						
+							<tr>
+								<th>
+									付款方式：
+								</th>
+								<td>
+									${orderBean.opaytype}&nbsp；(1表示货到付款，2表示支付宝，3表示财付通)
+								</td>
+							</tr>
+							<tr>
+								<th>
+									审核情况：
+								</th>
+								<td style="color:red;">
+									${orderBean.ostatus}&nbsp；(0表示通过审核，1表示审核失败，2表示等待审核)
+								</td>
+							</tr>
+							
+						</table>
+					</div>
+				</div>
+				<div class="globalModule">
+					<h3>
+						订单详细信息
+					</h3>
+					<div class="globalModuleContent">
+						<table cellpadding="0" cellspacing="0" class="tableList">
+							<tr>
+								<th>
+									商品图片
+								</th>
+								<th>
+									商品编号
+								</th>
+								<th>
+									商品名称
+								</th>
+								<th>
+									商品单价
+								</th>
+								<th>
+									商品数量
+								</th>
+							</tr>
+							<c:forEach var="orderItemBean" items="${orderItemList}">
+							<tr>
+								<td>
+									<img src="<c:url value='${orderItemBean.fimg}' />" style="width:50px;height:40px;" />&nbsp;
+								</td>
+								<td>
+									${orderItemBean.fid}&nbsp;
+								</td>
+								<td>
+									${orderItemBean.fname}&nbsp;
+								</td>
+								<td style="color:red;">
+									￥${orderItemBean.fprice}&nbsp;
+								</td>
+								<td>
+									${orderItemBean.ncount}&nbsp;
+								</td>
+							</tr>
+							</c:forEach>
+							<tr>
+								<td colspan="5" style="color:red;" align="right">合计：￥${orderBean.ototalprice}&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center" style="border:0px;padding-top:5px;"><input type="button" onclick="javasctipr:history.back();" value="返回上一页" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="globalFooter">
+				<div id="footerLine">
+					<img src="<c:url value='/images/footer_line.gif' />" alt="" />
+				</div>
+				<p id="footerNav">
+					<a href="#">免责条款</a> |
+					<a href="#">隐私保护</a> |
+					<a href="#">咨询热点</a> |
+					<a href="#">联系我们</a> |
+					<a href="#">公司简介</a> |
+					<a href="#">预留功能</a> |
+					<a href="<c:url value='/Admin_Login.jsp' />">后台管理</a>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

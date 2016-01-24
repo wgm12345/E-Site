@@ -1,0 +1,168 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : root
+Source Server Version : 50621
+Source Host           : localhost:3306
+Source Database       : e-site
+
+Target Server Type    : MYSQL
+Target Server Version : 50621
+File Encoding         : 65001
+
+Date: 2016-01-02 23:24:02
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for customer
+-- ----------------------------
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `cid` varchar(20) NOT NULL,
+  `cpwd` varchar(30) DEFAULT NULL,
+  `cname` varchar(30) DEFAULT NULL,
+  `csex` varchar(8) DEFAULT NULL,
+  `cphone` varchar(30) DEFAULT NULL,
+  `caddress` varchar(300) DEFAULT NULL,
+  `cemail` varchar(50) DEFAULT NULL,
+  `cregdate` varchar(50) DEFAULT NULL,
+  `clastdate` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of customer
+-- ----------------------------
+INSERT INTO `customer` VALUES ('qdl', '1234', '丘德来', 'man', '13545675642', '福州大学29号楼', '759680737@qq.com', '2016-01-02 22:02:25', '2016-01-02 22:02:25');
+INSERT INTO `customer` VALUES ('rfj', '1234', '阮芳健', 'man', '13545675642', '福州大学29号楼', '759686561@qq.com', '2016-01-02 21:57:47', '2016-01-02 21:57:47');
+
+-- ----------------------------
+-- Table structure for orders
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `oid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` varchar(20) DEFAULT NULL,
+  `sid` varchar(20) DEFAULT NULL,
+  `osize` int(11) DEFAULT NULL,
+  `ototalprice` double DEFAULT NULL,
+  `orderdate` varchar(50) DEFAULT NULL,
+  `opaytype` int(11) DEFAULT NULL,
+  `ostatus` int(11) DEFAULT NULL,
+  `oname` varchar(30) DEFAULT NULL,
+  `oaddress` varchar(300) DEFAULT NULL,
+  `ophone` varchar(30) DEFAULT NULL,
+  `oemail` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`oid`),
+  KEY `cid` (`cid`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `customer` (`cid`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `seller` (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for order_item
+-- ----------------------------
+DROP TABLE IF EXISTS `order_item`;
+CREATE TABLE `order_item` (
+  `nid` int(11) NOT NULL AUTO_INCREMENT,
+  `oid` int(11) DEFAULT NULL,
+  `fid` int(11) DEFAULT NULL,
+  `fname` varchar(30) DEFAULT NULL,
+  `fdescription` varchar(300) DEFAULT NULL,
+  `fprice` double DEFAULT NULL,
+  `fimg` varchar(300) DEFAULT NULL,
+  `ncount` int(11) DEFAULT NULL,
+  `ntotalprice` double DEFAULT NULL,
+  PRIMARY KEY (`nid`),
+  KEY `oid` (`oid`),
+  KEY `fid` (`fid`),
+  CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`),
+  CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `food` (`fid`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of order_item
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `fid` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(100) DEFAULT NULL,
+  `fdescription` varchar(300) DEFAULT NULL,
+  `fprice` double DEFAULT NULL,
+  `fimg` varchar(300) DEFAULT NULL,
+  `sid` varchar(20) DEFAULT NULL,
+  `ftype` int(11) DEFAULT NULL,
+  `fstatus` int(11) DEFAULT NULL,
+  `fpraise` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fid`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `food_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `seller` (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES ('34', 'Tyrrells 薯片', '法国小零食非常少，基本上除了甜的还是甜的，咸的就是薯片坚果小饼干什么的 &#128164; 这个牌子的薯片标榜手工烹煮，口感不像一般薯片那么油，口味也都还不错，代纸这袋是奶酪&#129472;&#65039;味的，英国切达干酪&羊奶酪，推荐！ &#128079;&#127995; over', '29', '/EsiteImg/qdlNo.0lingshi1.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('35', 'Maltesers 麦提莎', '外层为巧克力衣，内含牛奶麦乳精，经典的巧克力球。但是吃起来比国内的麦丽素好吃，因为从巧克力及内部奶粉用料来讲，外层香滑巧克力是纯可可脂的，内馅香脆，感觉很纯正[色色R]巧克力不会有粉粉的感觉', '38', '/EsiteImg/qdlNo.1lingshi2.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('36', '巧克力饼干', '精致的饼干，裹着厚厚的巧克力外衣，真的超级美味啊[口水] 【韩国·饼干也有复古style】LOTTE乐天 Binch宾驰巧克力夹心饼干[赞R] 和普通的夹心饼干两面饼干，中间夹心的构造完全不一样！宾驰饼干一面是夹心，一面是饼干，喜欢夹心多过饼干的红薯们一定会爱不释手哒~满足感百分百的巧克力完全覆盖住饼干的一面，还有复古风十足的图案，一口下去既能尝到香浓可可味，又有饼干香脆的口感，与众不同才够味', '49', '/EsiteImg/qdlNo.2lingshi3.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('37', '营多捞面', '致小时候的味道～# 还记得｛营多｝吗～小时候的记忆～好几年的历史了～是我最喜欢吃的泡面品牌～没有之一～一直没变过～现在卖场有时候也很难买到～这次看到买了一打回来～包装变了但是味道还是那样～好吃！！[吧唧R][吧唧R][吧唧R]好怀念的味道', '16', '/EsiteImg/qdlNo.3lingshi4.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('38', '达美希腊式酸奶', 'Dutch Mill公司旗下2015年的新产品，有蜂蜜和莓果味。图中的是莓果味。 [酷]平时吃明治的草莓味莓果味都会有稍微过甜的感觉，这款完全不会，甜度刚刚好。', '21', '/EsiteImg/qdlNo.4lingshi5.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('39', 'ABC料理教室制作的马卡龙', '卡龙的成功与否和烤箱有很大的关系，一般家庭用的是全火，烘烤马卡龙最好是上下火分开,马卡龙的面饼里是没有面粉的。', '16', '/EsiteImg/qdlNo.5lingshi6.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('40', '巨型费列罗', '巨型费列罗，主要是造型比较有意思，搜了下淘宝，额，基本是这边的两倍价以上。', '18', '/EsiteImg/qdlNo.6lingshi7.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('41', '榛仁白巧克力', '这个巧克力好吃！ 每颗都很大 看起来丑丑的吃起来却很好吃 里面是一个完整的榛仁 巧克力也没有很甜 吃起来不会腻 有黑的有白的还有混合的 听朋友说还有榴莲味的 感觉也会很好吃 馋', '48', '/EsiteImg/qdlNo.7lingshi8.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('42', '多力多滋超浓芝士味玉米片', '一打开就是浓浓的芝士味扑面而来，因为是&#127805;不是土豆[吧唧R]所以质感要比一般的薯片要厚些～嚼起来也更香～', '16', '/EsiteImg/qdlNo.8lingshi9.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('43', '徐福记的曼越梅酥', '酥还是那样，就是普通的酥，里面的果肉不喜欢吃太甜的朋友们，这款很适合你噢。而且，这款和茶绝配噢，花茶，清茶都合适，果茶', '32', '/foodImg/nopic.gif', 'qdl', '0', '0', '0');
+INSERT INTO `product` VALUES ('44', '徐福记的曼越梅酥', '酥还是那样，就是普通的酥，里面的果肉不喜欢吃太甜的朋友们，这款很适合你噢。而且，这款和茶绝配噢，花茶，清茶都合适，果茶', '32', '/foodImg/nopic.gif', 'qdl', '0', '0', '0');
+INSERT INTO `product` VALUES ('45', '徐福记的曼越梅酥', '酥还是那样，就是普通的酥，里面的果肉不喜欢吃太甜的朋友们，这款很适合你噢。而且，这款和茶绝配噢，花茶，清茶都合适，果茶', '32', '/EsiteImg/qdlNo.9lingshi10.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('46', '含兔毛 可当开衫 毛衣4130', 'H家开衫/毛衣，手感柔滑~做工精细，偏薄\r\n珠珠和钻都是线缝上的，牢固，不过洗的时候还是要注意一下\r\n交错的亮珠和钻~奢华而又低调~你绝对值得拥有~~', '39', '/EsiteImg/qdlNo.10clothes1.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('47', '2015秋冬装新款女装韩版长袖格子连衣裙冬季加厚加绒气质打底裙潮 ', '此款为加绒打底裙 特价促销 支持8天无理由退换货服务 质量保证 模特实拍', '228', '/EsiteImg/qdlNo.11clothes2.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('48', '新鲜春装 设计师 胸前系带造型衬衣 简约气质', '气场、中性、趣味、混搭，提供充满实验乐趣的多元化表达，令到我们提供的服装始终“大牌平价，时髦实穿”！【5件包邮，特价品及特殊地区除外（新、藏、蒙、宁、甘、青及港澳台）！】', '59', '/EsiteImg/qdlNo.12cloth3.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('49', '2015冬装新款 简约连帽设计拉链棉衣 休闲百搭黑色外套时尚男大衣', '填充物: 仿丝棉 衣长: 常规 版型: 宽松 领型: 连帽 门襟: 拉链 颜色: 黑色', '588', '/EsiteImg/qdlNo.13cloth_nanzhuang1.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('50', '男士冬季毛衣男式韩版修身针织衫青少年潮牌内搭针织西服时尚衣服 ', '版型: 修身衣门襟: 一粒双排扣颜色: 黑色 红色 杏色 藏青色尺码: M L XL 2XL品牌: 其它/other适用场景: 其他休闲厚薄: 厚衣长: 常规基础风格: 青春流行后开衩方式: 无开衩', '65', '/EsiteImg/qdlNo.14cloth_nanzhuang2.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('51', '男士冬季毛衣男式韩版修身针织衫青少年潮牌内搭针织西服时尚衣服', '超值衬衫：高端韩国进口丝光棉面料！【绝不退色】【绝不起球】【绝不变形】厂家直供，性价比超高，实体店同款绝对不低于188元！本店新品冲量78包邮，限时限量！抓紧时间抢购！本店默认中通快递，支持15天无理由退换，赠送运费险，质量有问题包邮退换，真正0风险购物！放心选购', '79', '/EsiteImg/qdlNo.15cloth_nanzhuang3.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('52', '2015新款秋季纯棉格子男士衬衫男长袖衬衣韩版修身型青年休闲潮', '厚薄: 常规袖长: 长袖版型: 宽松领型: 尖领（常规）颜色: 格子尺码: 170/M 175/L 180/XL面料分类: 格子布品牌: KT.UOMO材质: 棉上市时间: 2015年适用场景: 其他休闲适用季节: 四季适用对象: 青年基础风格: 时尚都市细分风格: 基础大众面料功能: 免烫图案: 格子服饰工艺: 免烫处理', '95', '/EsiteImg/qdlNo.16cloth_nanzhuang4.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('53', '平跟低帮帆布鞋女鞋', '鞋制作工艺: 硫化工艺货号: B07上市年份季节: 2016年春季风格: 韩版鞋底材质: 牛筋鞋帮高度: 低帮闭合方式: 系带流行元素: 松糕跟颜色分类: 黑色 红色 蓝色尺码: 此款偏大一码 35 36 37 38 39 40图案: 纯色适用对象: 青年（18-40周岁）', '39', '/EsiteImg/qdlNo.17shoe_nv1.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('54', '百匡新款高帮帆布鞋', '正品百搭潮女鞋，韩版时尚布鞋，工作、旅游、上班、上学、跑步必备佳品，每天都有好鞋、美鞋为您推荐。', '59', '/EsiteImg/qdlNo.18shoe_nv3.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('55', '冬季男靴子韩版潮流短靴', '精选优质皮料！10天无理由退换，无任何购物风险！品质保障！！买就送袜子，此款为标准皮鞋码数，刚好比运动鞋偏大一码.脚胖脚宽的建议按正常码数拍。质量绝对有保证！', '148', '/EsiteImg/qdlNo.19shoe_nan1.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('56', '冬季男鞋保暖潮鞋', '最新款秋冬潮鞋，全新上市，质量保证，性价比超高，最最重要还是够好看又吸引眼球，简直美呆了，赞赞赞！！！', '69', '/EsiteImg/qdlNo.20shoe_nan2.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('57', '小贝克汉姆情侣男女款人字拖鞋', '星同款 火爆热卖 品质保障】 【 单笔订单拍2双立减3元】 【 赠送运费险，购物无忧】', '29', '/EsiteImg/qdlNo.21shoe_nan3.jpg', 'qdl', '1', '1', '0');
+INSERT INTO `product` VALUES ('58', '苹果 iPhone 5s', '真正的库存新机,可遇不可求的港版 美版 苹果/IPHONE 5S 完美支持移动联通4G!电信3G全网通吃', '1999', '/EsiteImg/qdlNo.22phone1.jpg', 'qdl', '2', '1', '0');
+INSERT INTO `product` VALUES ('59', '卡西欧 EX-ZR3500', '产品名称: Casio/卡西欧 EX-ZR3500品牌: Casio/卡西欧卡西欧型号: EX-ZR3500感光元件类型: CMOS传感器尺寸: 1/1.7英寸特殊功能: 美颜，无线LAN，蓝牙自动传输 光学防抖 广角 长焦 微距 高清摄像 旋转液晶屏上市时间: 2015年像素: 1200万光学变焦: 12倍成色: 全新显示屏尺寸: 3英寸电池类型: 锂电池售后服务: 店铺三包', '3400', '/EsiteImg/qdlNo.23phone2.jpg', 'qdl', '2', '1', '0');
+INSERT INTO `product` VALUES ('60', '联想台式机', '产品名称: Lenovo/联想 扬天M2610NCPU类型: Celeron/赛扬型号: G1840品牌: Lenovo/联想联想系列: 扬天系列扬天型号: 扬天M2610N台式机类型: 商用电脑适用品牌: Intel/英特尔内存容量: 1GB内存类型: DDR3硬盘容量: 250GB硬盘接口: SATA2硬盘转速: 7200转显卡接口: AGP显卡类型: 集成显卡显存容量: 共享系统内存屏幕尺寸: 20英寸显示器类型: LCD液晶-宽屏光驱类型: DVD-ROM声卡类型: 7.1操作系统: Free-DOS', '2200', '/EsiteImg/qdlNo.24digit3.jpg', 'qdl', '2', '1', '0');
+INSERT INTO `product` VALUES ('61', '健康监测运动手环', '如实描述===不正包退==）第五代最新款儿童智能手表', '330', '/EsiteImg/qdlNo.25digit4.jpg', 'qdl', '2', '1', '0');
+INSERT INTO `product` VALUES ('62', 'iphone6s 苹果6s', '现货急速发 未拆封未激活 送手机套手机膜卡托卡针\" iPhone6S五大更新：1，新增玫瑰金配色，机身材质采用7000铝合金，不再出现弯曲门。2，屏幕加入3D Touch压感触控技术。3，全新A9处理器CPU及GPU。4，IOS9系统。5，1200万后置+500w前置摄像头。', '4088', '/EsiteImg/qdlNo.26digit5.jpg', 'qdl', '0', '1', '0');
+INSERT INTO `product` VALUES ('63', 'TG4潜水相机', '产品名称：Olympus/奥林巴斯 Stylus...品牌: Olympus/奥林巴斯感光元件类型: CMOS传感器尺寸: 1/2.3英寸像素: 1600万及以上光学变焦: 4倍显示屏尺寸: 3英寸储存介质: SD卡电池类型: 锂电池有效像素: 1600-2000万', '2666', '/EsiteImg/qdlNo.27digit6.jpg', 'qdl', '2', '1', '0');
+
+-- ----------------------------
+-- Table structure for seller
+-- ----------------------------
+DROP TABLE IF EXISTS `seller`;
+CREATE TABLE `seller` (
+  `sid` varchar(20) NOT NULL,
+  `spwd` varchar(30) DEFAULT NULL,
+  `sname` varchar(30) DEFAULT NULL,
+  `sphone` varchar(30) DEFAULT NULL,
+  `saddress` varchar(300) DEFAULT NULL,
+  `sdescription` varchar(300) DEFAULT NULL,
+  `semail` varchar(50) DEFAULT NULL,
+  `spraise` varchar(255) DEFAULT NULL,
+  `sregdate` varchar(50) DEFAULT NULL,
+  `slastdate` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`sid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of seller
+-- ----------------------------
+INSERT INTO `seller` VALUES ('qdl', '1234', 'qdl', '18650497363', '福州大学', '长得帅', '759680737@qq.com', '0', '', '2016-01-02 22:06:09');

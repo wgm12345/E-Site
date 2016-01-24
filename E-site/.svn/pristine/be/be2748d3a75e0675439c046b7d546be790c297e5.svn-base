@@ -1,0 +1,222 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_3306
+Source Server Version : 50610
+Source Host           : localhost:3306
+Source Database       : eaternet
+
+Target Server Type    : MYSQL
+Target Server Version : 50610
+File Encoding         : 65001
+
+Date: 2015-01-07 13:54:31
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `customer`
+-- ----------------------------
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `cid` varchar(20) NOT NULL,
+  `cpwd` varchar(30) DEFAULT NULL,
+  `cname` varchar(30) DEFAULT NULL,
+  `csex` varchar(8) DEFAULT NULL,
+  `cphone` varchar(30) DEFAULT NULL,
+  `caddress` varchar(300) DEFAULT NULL,
+  `cemail` varchar(50) DEFAULT NULL,
+  `cregdate` varchar(50) DEFAULT NULL,
+  `clastdate` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of customer
+-- ----------------------------
+INSERT INTO `customer` VALUES ('csz', '11111', 'csz', 'man', '42236134', '33#312', '21425@stt.com', '2015-01-04 21:19:34', '2015-01-04 21:19:34');
+INSERT INTO `customer` VALUES ('heigui', '11111', 'cpk', 'man', '2142634', '33#311', '243484923@qq.com', '2015-01-04 21:16:48', '2015-01-04 23:28:05');
+INSERT INTO `customer` VALUES ('lmj', '11111', 'lmj', 'man', '2154141', '33#311', '231287@120.com', '2015-01-04 21:17:52', '2015-01-07 13:33:07');
+INSERT INTO `customer` VALUES ('lsqz', '11111', 'lsqz', 'man', '18060480363', '33#311', '122345646@qq.com', '2015-01-04 19:55:28', '2015-01-04 19:55:28');
+
+-- ----------------------------
+-- Table structure for `food`
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `fid` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(30) DEFAULT NULL,
+  `fdescription` varchar(300) DEFAULT NULL,
+  `fprice` double DEFAULT NULL,
+  `fimg` varchar(300) DEFAULT NULL,
+  `sid` varchar(20) DEFAULT NULL,
+  `ftype` int(11) DEFAULT NULL,
+  `fstatus` int(11) DEFAULT NULL,
+  `fpraise` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fid`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `food_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `seller` (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of food
+-- ----------------------------
+INSERT INTO `product` VALUES ('1', 'BeijingDuck', '', '298', '/foodImg/BeijingRoastDuckNo.0t01c78fb8a9b7a2fdaf.jpg', 'BeijingRoastDuck', '0', '1', '0');
+INSERT INTO `product` VALUES ('2', 'eggplant', '', '28', '/foodImg/BeijingRoastDuckNo.1600w400 (5).jpg', 'BeijingRoastDuck', '1', '1', '0');
+INSERT INTO `product` VALUES ('3', 'Coke chicken wing', '', '39', '/foodImg/BeijingRoastDuckNo.2600w400 (1).jpg', 'BeijingRoastDuck', '0', '1', '0');
+INSERT INTO `product` VALUES ('4', 'hambarger', '', '28', '/foodImg/DicosNo.0dekeshi-mihanbao-slt.jpg', 'Dicos', '0', '1', '3');
+INSERT INTO `product` VALUES ('5', 'fried chicken', '', '18', '/foodImg/DicosNo.1dekeshi-zhaji-slt.jpg', 'Dicos', '1', '1', '4');
+INSERT INTO `product` VALUES ('6', 'drink', '', '15', '/foodImg/DicosNo.2dekeshi-yinliao-slt.jpg', 'Dicos', '2', '1', '0');
+INSERT INTO `product` VALUES ('7', 'rice', '', '22', '/foodImg/DicosNo.3dekeshi-mifan-slt.jpg', 'Dicos', '0', '1', '0');
+INSERT INTO `product` VALUES ('8', 'chicken rolls', '', '18', '/foodImg/DicosNo.4dekeshi-juan-slt.jpg', 'Dicos', '0', '1', '0');
+INSERT INTO `product` VALUES ('9', 'ChickenWing', '', '30', '/foodImg/MakroNo.0t01b420d92d140004b5.jpg', 'Makro', '1', '1', '1');
+INSERT INTO `product` VALUES ('10', 'porridge', '', '18', '/foodImg/MakroNo.1t0161ca36ef4e5be796.jpg', 'Makro', '0', '1', '3');
+INSERT INTO `product` VALUES ('11', 'sushi', '', '14', '/foodImg/MakroNo.2t0118fd890540b37564.jpg', 'Makro', '0', '1', '0');
+INSERT INTO `product` VALUES ('12', 'ChickenBreast', '', '14', '/foodImg/ParksonNo.0600w400.jpg', 'Parkson', '0', '1', '0');
+INSERT INTO `product` VALUES ('13', 'Onigiri', '', '8', '/foodImg/ParksonNo.1t01220611c6e3b997ab.jpg', 'Parkson', '1', '1', '0');
+INSERT INTO `product` VALUES ('14', 'PorkRibs', '', '13', '/foodImg/ParksonNo.2600w400 (3).jpg', 'Parkson', '0', '1', '0');
+INSERT INTO `product` VALUES ('15', 'lemon juice', '', '28', '/foodImg/StarbucksNo.0t0179867f99a3a94bd2.jpg', 'Starbucks', '2', '1', '0');
+INSERT INTO `product` VALUES ('16', 'pudding', '', '15', '/foodImg/StarbucksNo.1t014e35a7bbf21d11f0.jpg', 'Starbucks', '1', '1', '0');
+INSERT INTO `product` VALUES ('17', 'coffee', '', '15', '/foodImg/StarbucksNo.2t01c208993b9d2d22a7.jpg', 'Starbucks', '2', '1', '0');
+INSERT INTO `product` VALUES ('18', 'Hamburger', '', '15', '/foodImg/SUBWAYNo.0t01584aadd73788c692.jpg', 'SUBWAY', '0', '1', '0');
+INSERT INTO `product` VALUES ('19', 'Pizza', '', '28', '/foodImg/SUBWAYNo.1t014071cddb83758c3f.jpg', 'SUBWAY', '0', '1', '0');
+INSERT INTO `product` VALUES ('20', 'TipTop', '', '22', '/foodImg/SUBWAYNo.2t0163b1b4ff68fba326.jpg', 'SUBWAY', '2', '1', '0');
+
+-- ----------------------------
+-- Table structure for `manager`
+-- ----------------------------
+DROP TABLE IF EXISTS `manager`;
+CREATE TABLE `manager` (
+  `mid` varchar(20) NOT NULL,
+  `mpwd` varchar(30) DEFAULT NULL,
+  `mname` varchar(30) DEFAULT NULL,
+  `msex` varchar(8) DEFAULT NULL,
+  `mphone` varchar(30) DEFAULT NULL,
+  `maddress` varchar(300) DEFAULT NULL,
+  `memail` varchar(50) DEFAULT NULL,
+  `mlevel` int(11) DEFAULT NULL,
+  PRIMARY KEY (`mid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of manager
+-- ----------------------------
+INSERT INTO `manager` VALUES ('admin', '1111', 'cpk', 'man', '2342244', '33#311', 'pk@qq.com', '1');
+INSERT INTO `manager` VALUES ('cpk', '1111', 'kobe', 'man', '2859576', '33#311', '784533@qq.com', '0');
+
+-- ----------------------------
+-- Table structure for `orders`
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `oid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` varchar(20) DEFAULT NULL,
+  `sid` varchar(20) DEFAULT NULL,
+  `osize` int(11) DEFAULT NULL,
+  `ototalprice` double DEFAULT NULL,
+  `orderdate` varchar(50) DEFAULT NULL,
+  `opaytype` int(11) DEFAULT NULL,
+  `ostatus` int(11) DEFAULT NULL,
+  `oname` varchar(30) DEFAULT NULL,
+  `oaddress` varchar(300) DEFAULT NULL,
+  `ophone` varchar(30) DEFAULT NULL,
+  `oemail` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`oid`),
+  KEY `cid` (`cid`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `customer` (`cid`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `seller` (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+INSERT INTO `orders` VALUES ('1', 'csz', 'Dicos', '2', '48', '2015-01-04 21:20:46', '2', '2', 'csz', '33#309', '42236134', '21425@stt.com');
+INSERT INTO `orders` VALUES ('2', 'heigui', 'BeijingRoastDuck', '2', '326', '2015-01-04 21:23:44', '3', '0', 'cpk', '33#311', '2142634', '243484923@qq.com');
+INSERT INTO `orders` VALUES ('3', 'lmj', 'BeijingRoastDuck', '2', '337', '2015-01-04 21:28:27', '1', '2', 'lmj', '33#311', '2154141', '231287@120.com');
+INSERT INTO `orders` VALUES ('4', 'heigui', 'Dicos', '2', '125', '2015-01-04 21:30:08', '3', '0', 'cpk', '33#309', '2142634', '243484923@qq.com');
+INSERT INTO `orders` VALUES ('5', 'heigui', 'Dicos', '2', '140', '2015-01-04 22:23:55', '2', '1', 'cpk', '33#311', '2142634', '243484923@qq.com');
+INSERT INTO `orders` VALUES ('6', 'lmj', 'Dicos', '2', '46', '2015-01-07 13:31:51', '2', '2', 'lmj', '33#311', '2154141', '231287@120.com');
+
+-- ----------------------------
+-- Table structure for `order_item`
+-- ----------------------------
+DROP TABLE IF EXISTS `order_item`;
+CREATE TABLE `order_item` (
+  `nid` int(11) NOT NULL AUTO_INCREMENT,
+  `oid` int(11) DEFAULT NULL,
+  `fid` int(11) DEFAULT NULL,
+  `fname` varchar(30) DEFAULT NULL,
+  `fdescription` varchar(300) DEFAULT NULL,
+  `fprice` double DEFAULT NULL,
+  `fimg` varchar(300) DEFAULT NULL,
+  `ncount` int(11) DEFAULT NULL,
+  `ntotalprice` double DEFAULT NULL,
+  PRIMARY KEY (`nid`),
+  KEY `oid` (`oid`),
+  KEY `fid` (`fid`),
+  CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`),
+  CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `food` (`fid`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of order_item
+-- ----------------------------
+INSERT INTO `order_item` VALUES ('1', '3', '1', 'BeijingDuck', '', '298', '/foodImg/BeijingRoastDuckNo.0t01c78fb8a9b7a2fdaf.jpg', '1', '298');
+INSERT INTO `order_item` VALUES ('2', '3', '3', 'Coke chicken wing', '', '39', '/foodImg/BeijingRoastDuckNo.2600w400 (1).jpg', '1', '39');
+INSERT INTO `order_item` VALUES ('3', '4', '4', 'hambarger', '', '28', '/foodImg/DicosNo.0dekeshi-mihanbao-slt.jpg', '2', '56');
+INSERT INTO `order_item` VALUES ('4', '4', '5', 'fried chicken', '', '18', '/foodImg/DicosNo.1dekeshi-zhaji-slt.jpg', '3', '54');
+INSERT INTO `order_item` VALUES ('5', '4', '6', 'drink', '', '15', '/foodImg/DicosNo.2dekeshi-yinliao-slt.jpg', '1', '15');
+INSERT INTO `order_item` VALUES ('6', '5', '4', 'hambarger', '', '28', '/foodImg/DicosNo.0dekeshi-mihanbao-slt.jpg', '2', '56');
+INSERT INTO `order_item` VALUES ('7', '5', '5', 'fried chicken', '', '18', '/foodImg/DicosNo.1dekeshi-zhaji-slt.jpg', '2', '36');
+INSERT INTO `order_item` VALUES ('8', '5', '6', 'drink', '', '15', '/foodImg/DicosNo.2dekeshi-yinliao-slt.jpg', '2', '30');
+INSERT INTO `order_item` VALUES ('9', '5', '8', 'chicken rolls', '', '18', '/foodImg/DicosNo.4dekeshi-juan-slt.jpg', '1', '18');
+INSERT INTO `order_item` VALUES ('10', '6', '4', 'hambarger', '', '28', '/foodImg/DicosNo.0dekeshi-mihanbao-slt.jpg', '1', '28');
+INSERT INTO `order_item` VALUES ('11', '6', '5', 'fried chicken', '', '18', '/foodImg/DicosNo.1dekeshi-zhaji-slt.jpg', '1', '18');
+
+-- ----------------------------
+-- Table structure for `sales_promotion`
+-- ----------------------------
+DROP TABLE IF EXISTS `sales_promotion`;
+CREATE TABLE `sales_promotion` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `pname` varchar(30) DEFAULT NULL,
+  `pstartime` varchar(50) DEFAULT NULL,
+  `pendtime` varchar(50) DEFAULT NULL,
+  `pdescription` varchar(300) DEFAULT NULL,
+  `pstatus` int(11) DEFAULT NULL,
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sales_promotion
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `seller`
+-- ----------------------------
+DROP TABLE IF EXISTS `seller`;
+CREATE TABLE `seller` (
+  `sid` varchar(20) NOT NULL,
+  `spwd` varchar(30) DEFAULT NULL,
+  `sname` varchar(30) DEFAULT NULL,
+  `sphone` varchar(30) DEFAULT NULL,
+  `saddress` varchar(300) DEFAULT NULL,
+  `sdescription` varchar(300) DEFAULT NULL,
+  `semail` varchar(50) DEFAULT NULL,
+  `spraise` int(11) DEFAULT NULL,
+  `sregdate` varchar(50) DEFAULT NULL,
+  `slastdate` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`sid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of seller
+-- ----------------------------
+INSERT INTO `seller` VALUES ('BeijingRoastDuck', '11111', 'Beijing Roast Duck', '2576859', 'China', 'roast duck', '77777@126.com', '0', '2015-01-04 20:14:26', '2015-01-07 13:36:24');
+INSERT INTO `seller` VALUES ('Dicos', '22222', 'Dicos', '2071809', 'America', 'hambarger', '33333@126.com', '5', '2015-01-04 20:05:43', '2015-01-07 13:49:16');
+INSERT INTO `seller` VALUES ('Makro', '33333', 'Makro', '2335566', 'China', 'supermarket', '55555@126.com', '3', '2015-01-04 20:10:46', '2015-01-07 13:38:05');
+INSERT INTO `seller` VALUES ('Parkson', '44444', 'Parkson', '246647', 'India', 'supermarkey', '66666@126.com', '0', '2015-01-04 20:12:40', '2015-01-07 13:41:27');
+INSERT INTO `seller` VALUES ('Starbucks', '55555', 'Starbucks', '2784533', 'America', 'coffee', '11111@163.com', '0', '2015-01-04 20:00:06', '2015-01-07 13:45:01');
+INSERT INTO `seller` VALUES ('SUBWAY', '66666', 'SUBWAY', '2658493', 'America', 'snack', '99999@126.com', '0', '2015-01-04 20:17:15', '2015-01-07 13:46:39');

@@ -1,0 +1,93 @@
+﻿package com.es.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.es.dao.bean.customerBean;
+import com.es.dao.factory.DAOFactory;
+import com.es.dao.pub.PublicGetDate;
+import com.es.dao.pub.PublicStrIsNull;
+
+public class LoginServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		String suser = PublicStrIsNull.isNullStr(request.getParameter("suser"));
+		String spwd = request.getParameter("spwd");
+		String rand = request.getParameter("rand");
+		String srand = (String) session.getAttribute("rand");
+		session.removeAttribute("rand");
+		String fromPage = request.getParameter("fromPage");
+		String msgPage = request.getParameter("msg");
+		String msg = "";
+
+		if (rand.equals(srand)) {
+			customerBean user = DAOFactory.createCustomerDAO().searchUser(suser);
+			if (user != null ) {
+				if (user.getCpwd().equals(spwd)) {
+					user.setClastdate(PublicGetDate.getDateTime());
+					DAOFactory.createCustomerDAO().updateUser(user);
+					session.setAttribute("user", user);
+					Cookie cookie = new Cookie("suser", suser);
+					cookie.setMaxAge(60 * 60 * 24 * 365);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+					if (fromPage.equals("Show.jsp")) {
+						response.sendRedirect(request.getContextPath() + "/Show.jsp");
+					} else if (fromPage.equals("Customer_Login.jsp")) {
+						msg = "登陆成功, 3 秒后自动进入会员中心........";
+						fromPage = request.getContextPath() + "/Customer/Change_Info.jsp";
+						response.sendRedirect(request.getContextPath() + msgPage
+								+ "?fromPage="
+								+ fromPage
+								+ "&msg="
+								+ java.net.URLEncoder.encode(msg,
+										"UTF-8"));
+					} else if (fromPage.equals("Paymode.jsp")) {
+						msg = "登陆成功, 3 秒后进入结账下单页面....";
+						fromPage = request.getContextPath() + "/Paymode.jsp";
+						response.sendRedirect(request.getContextPath() + msgPage
+								+ "?fromPage="
+								+ fromPage
+								+ "&msg="
+								+ java.net.URLEncoder.encode(msg,
+										"UTF-8"));
+					}
+
+				} else {
+					Integer count = (Integer) session
+							.getAttribute("LoginCount");
+					if (count == null) {
+						session.setAttribute("LoginCount", 3);
+					}
+					count = (Integer) session.getAttribute("LoginCount")
+							- Integer.valueOf(1);
+					session.setAttribute("LoginCount", count);
+					msg = "密码错误.请核实后重新登陆!您还有 " + count + " 次登陆机会!";
+					response.sendRedirect(request.getContextPath() + msgPage + "?fromPage=" + fromPage
+							+ "&msg="
+							+ java.net.URLEncoder.encode(msg, "UTF-8"));
+				}
+			} else {
+				msg = "此用户不存在.请重新输入!";
+				response.sendRedirect(request.getContextPath() + msgPage + "?fromPage=" + fromPage
+						+ "&msg=" + java.net.URLEncoder.encode(msg, "UTF-8"));
+			}
+		} else {
+			msg = "验证码输入错误.请重新输入!";
+			response.sendRedirect(request.getContextPath() + msgPage + "?fromPage=" + fromPage + "&msg="
+					+ java.net.URLEncoder.encode(msg, "UTF-8"));
+		}
+	}
+}

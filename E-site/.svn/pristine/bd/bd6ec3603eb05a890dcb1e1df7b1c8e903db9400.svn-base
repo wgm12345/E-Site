@@ -1,0 +1,94 @@
+<%@ page language="java" contentType="text/html;charset=gb2312" %>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	<title>管理中心 - 添加食品</title>
+	<link href="<c:url value='/Seller/styles/general.css' />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value='/Seller/styles/main.css' />" rel="stylesheet" type="text/css" />
+    <script language="javascript" src="<c:url value='/js/calendar.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+
+</head>
+<body>
+<h1>
+<span class="action-span"><a href="<c:url value='/Seller/Food_List.jsp' />">食品列表</a></span>
+<span><a href="<c:url value='/Seller/Seller_Main.jsp ' />">管理中心</a>  - 添加食品</span>
+</h1>
+<div class="main-div">
+<form method="post" onsubmit="return checkSellerAddFood();" action="<c:url value='/servlet/FoodAddServlet' />" name="foodAdd" enctype="multipart/form-data">
+<table width="100%" >
+   <tr>
+    <td class="label">食品名称:</td>
+    <td><input name="fname" type="text"/>
+    	<span id="foodname">(必填)</span></td>
+  </tr>
+
+  <tr>
+    <td class="label">食品单价:</td>
+    <td><input name="fprice" type="text"/>
+    <span id="foodprice">(必填)</span></td>
+  </tr>
+   <tr>
+    <td class="label">食品分类:</td>
+    <td><input name="ftype" type="radio" value="0" checked="checked" />&nbsp;主食&nbsp;
+        <input type="radio" name="ftype" value="1"/>&nbsp;小吃&nbsp;
+        <input type="radio" name="ftype" value="2"/>&nbsp;点心饮品&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="label">食品图片:</td>
+    <td>
+        <input type="hidden" name="oldimg" id="oldimg" value="/foodImg/nopic.gif" />
+        <input type="file" name="fimg" id="fimg" title="图片格式只能是.jpg .gif .png .bmp" />
+
+  </tr>
+  <tr>
+    <td class="label">食品描述:</td>
+    <td><textarea name="fdescription" cols="30" rows="6"></textarea></td>
+  </tr>
+  <tr>
+  	<td align="right">
+  	  <input name="submit" type="submit" value="添加" class="button" />
+    </td>
+    <td align="left"><input type="reset" value=" 重置 " class="button" /></td>
+  </tr>
+</table>
+</form>
+</div>
+<c:choose>
+	<c:when test="${not empty param.msg}">
+	    <c:if test="${not empty param.success}">
+        	<script language="javascript">
+        		alert('${param.msg}');
+            	location.href="<c:url value="/Seller/Food_List.jsp" />";
+            </script>
+        </c:if>
+    	<script language="javascript">
+    		alert('${param.msg}');
+    		location.href="<c:url value="/Seller/Food_Add.jsp" />";
+    	</script>
+        <c:if test="${not empty param.success}">
+        	<script language="javascript">
+            	location.href="<c:url value="/Seller/Food_List.jsp" />";
+            </script>
+        </c:if>
+    </c:when>
+</c:choose>
+<div id="footer">版权所有 &copy;两把刷子小组</div>
+<script language="javascript" >
+  <!--
+        var mcname_empty = "商品名称不能为空。";
+		var mcprice_empty = "商品单价不能为空";
+		var mcprice_msg = "商品价格只能为浮点数";
+		var mcimg_msg = "图片格式错误.请重新选择商品图片.\n\n图片格式只能为 gif jpg png bmp";
+		var Type_empty = "请选择商品类别";
+		var mcimg_empty = "请选择商品图片文件\n\n或点击不使用商品图片"
+	-->
+</script>
+</body>
+</html>

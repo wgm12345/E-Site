@@ -1,0 +1,163 @@
+<%@ page language="java" contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="<c:url value='/bootstrap-3.3.5-dist/css/bootstrap.css' />" rel="stylesheet" type="text/css" />
+	    <link href="<c:url value='/images/css/page-core.css' />" rel="stylesheet" type="text/css" />
+	    <script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+	    <script type="text/javascript" src="<c:url value='/bootstrap-3.3.5-dist/js/bootstrap.js' />"></script>	
+		<link href="<c:url value='/images/css/bootcss.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/main.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/reset.css' />" rel="stylesheet" type="text/css" />
+		<title>订单详细页面</title>
+		<script language="javascript" src="<c:url value='/js/calendar.js' />"></script>
+	</head>
+	<body>
+		<%@include file="/Header.jsp" %>
+		<div id="container">
+
+		  <div class="shoppingCart comWidth">
+				<div class="shopping_item">
+					<h3 class="shopping_tit">
+						订单详细信息
+					</h3>
+					<div class="shopping_cont padding_shop">
+						<table border="0" align="center" cellpadding="0" cellspacing="0" class="tableList">
+							<tr>
+								<th>
+									所属用户：
+								</th>
+								<td>
+									${orderBean.cid}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									真实姓名：
+								</th>
+								<td>
+									${orderBean.oname}&nbsp;
+								</td>
+							</tr>
+							
+							<tr>
+								<th>
+									电子邮箱：
+								</th>
+								<td>
+									${orderBean.oemail}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									电话号码：
+								</th>
+								<td>
+									${orderBean.ophone}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									联系地址：
+								</th>
+								<td>
+									${orderBean.oaddress}&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<th>
+									下单时间：
+								</th>
+								<td>
+									${orderBean.orderdate}&nbsp;
+								</td>
+							</tr>
+						
+							<tr>
+								<th>
+									付款方式：
+								</th>
+								<td>
+									${orderBean.opaytype}&nbsp；(1表示货到付款，2表示支付宝，3表示财付通)
+								</td>
+							</tr>
+							<tr>
+								<th>
+									审核情况：
+								</th>
+								<td style="color:red;">
+									${orderBean.ostatus}&nbsp；(0表示通过审核，1表示审核失败，2表示等待审核)
+								</td>
+							</tr>
+							
+						</table>
+					</div>
+				</div>
+				<div class="hr_25"></div>
+				<div class="shopping_item">
+					<h3 class="shopping_tit">
+						订单详细信息
+					</h3>
+					<div class="shopping_cont padding_shop">
+						<table cellpadding="0" cellspacing="0" class="tableList">
+							<tr>
+								<th>
+									商品图片
+								</th>
+								<th>
+									商品编号
+								</th>
+								<th>
+									商品名称
+								</th>
+								<th>
+									商品单价
+								</th>
+								<th>
+									商品数量
+								</th>
+							</tr>
+							<c:forEach var="orderItemBean" items="${orderItemList}">
+							<tr>
+								<td>
+									<img src="<c:url value='${orderItemBean.fimg}' />" style="width:50px;height:40px;" />&nbsp;
+								</td>
+								<td>
+									${orderItemBean.fid}&nbsp;
+								</td>
+								<td>
+									${orderItemBean.fname}&nbsp;
+								</td>
+								<td style="color:red;">
+									￥${orderItemBean.fprice}&nbsp;
+								</td>
+								<td>
+									${orderItemBean.ncount}&nbsp;
+								</td>
+							</tr>
+							</c:forEach>
+							<tr>
+								<td colspan="5" style="color:red;" align="right">合计：￥${orderBean.ototalprice}&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center" style="border:0px;padding-top:5px;"><input type="button" class="button button-raised button-primary button-pill button-small" onclick="javasctipr:history.back();" value="返回上一页" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="hr_25"></div>
+		<%@include file="/Footer.jsp" %>	
+	</body>
+</html>

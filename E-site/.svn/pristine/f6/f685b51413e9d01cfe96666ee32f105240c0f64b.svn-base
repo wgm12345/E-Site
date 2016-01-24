@@ -1,0 +1,48 @@
+package com.es.dao.pub;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * 获取系统时间类
+
+ */
+public class PublicGetDate {
+
+	/**
+	 * 获取系统时间,时间格式为:yyyy-MM-dd HH:mm:ss 如2008-08-20 00:22:22 或2008-08-20
+	 * 23:11:11
+	 * 
+	 * @return 格式化后的时间字符串
+	 */
+	public static String getDateTime() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String str = format.format(date);
+		return str;
+	}
+
+	/**
+	 * 获取系统时间,时间格式为:yyyy-MM-dd 如2008-08-20
+	 * 
+	 * @return 格式化后的时间字符串
+	 */
+	public static String getDate() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String str = format.format(date);
+		return str;
+	}
+	
+	/**
+	 * 获取系统时间,时间格式为:yyyyMMddHHmmss 如20080820122030
+	 * 
+	 * @return 格式化后的时间字符串
+	 */
+	public static String getDateFileName() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String str = format.format(date);
+		return str;
+	}
+}

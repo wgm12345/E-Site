@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <Context docBase="EaterNet_test" path="/EaterNet_test">  
+  <Resource    
+      name="eaternet"  
+      auth="Container"  
+      type="javax.sql.DataSource"   
+      username="root"  
+      password="root"  
+      driverClassName="com.mysql.jdbc.Driver"  
+      url="jdbc:mysql://localhost:3306/eaternet"  
+      maxActive="1000"  
+      maxIdle="8000"/>
+</Context>  
+

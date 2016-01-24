@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html;charset=utf-8" %>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	
+	<link href="<c:url value='/bootstrap-3.3.5-dist/css/bootstrap.css' />" rel="stylesheet" type="text/css" />
+   	<link href="<c:url value='/images/css/page-core.css' />" rel="stylesheet" type="text/css" />
+   	<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+   	<script type="text/javascript" src="<c:url value='/bootstrap-3.3.5-dist/js/bootstrap.js' />"></script>
+	
+	<script src="js/jquery/jquery-1.10.0.js" type=text/javascript></script>
+	<script src="js/jquery/jquery.validate-1.13.1.js" type="text/javascript"></script>
+	<link href="<c:url value='images/css/style.css' />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value='images/css/bootcss.css' />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value='css/main.css' />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value='css/reset.css' />" rel="stylesheet" type="text/css" />
+<title>用户注册</title>
+	<script language="javascript" src="<c:url value='/js/calendar.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+</head>
+<body>
+<%@include file="Header.jsp" %>
+<div id="container">
+
+		<div class="shoppingCart comWidth">
+			<div class="shopping_item">
+              <h3 class="shopping_tit">会员注册</h3>
+              <form name="regUser" action="<c:url value='/servlet/RegServlet' />" method="post" onsubmit="return checkRegForm();">
+              <ul class="regItem">
+              <li>
+              	用&nbsp;&nbsp;户&nbsp;&nbsp;名:
+              	<input name="suser" type="text" class="textInput" maxlength="30" onblur="is_registered(this.value);" />
+              	<span id="username">(必填)</span>
+              </li>
+              <li>
+              	密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:
+              	<input id="spwd" name="spwd" type="password" class="textInput" maxlength="30" onblur="check_password(this.value);" onkeyup="checkIntensity(this.value)" />
+              	<span id="password">(必填)</span>
+              </li>
+              <li>
+                  <ol>密码强度:</ol>
+                  <ul id="pwd_lower" >弱</ul>
+                  <ul id="pwd_middle" >中</ul>
+                  <ul id="pwd_high" >强</ul>
+              </li>
+              <div style="height:20px;"></div>
+              <li clear:left;">
+              	确认密码:
+                <input name="spwd2" type="password" class="textInput" maxlength="30" onblur="check_conform_password(this.value);" />
+                <span id="password2">(必填)</span>
+              </li>
+              <li>
+              	性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;&nbsp;&nbsp;
+                <input name="ssex" type="radio" class="radioItem" value="man" checked="checked" />男&nbsp;&nbsp;&nbsp;&nbsp;
+                <input name="ssex" type="radio" class="radioItem" value="woman" />女              </li>
+               <li>
+              	真实姓名:
+                <input name="sname" type="text" class="textInput" maxlength="30" />
+              </li>
+
+              <li>
+             	电子邮箱:
+                <input name="semail" type="text" class="textInput" maxlength="30" onblur="checkEmail(this.value);" />
+                <span id="emailcheck">(必填)</span>              </li>
+              <li>
+              	电话号码:
+                <input name="sphone" type="text" class="textInput" maxlength="30" onblur="checkPhone(this.value);" />
+                <span id="phonecheck">(必填)</span>
+              </li>
+              <li>
+              	地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:
+                <input name="saddress" type="text" class="textInput" maxlength="300" />
+              </li>
+			  <li>
+				验&nbsp;&nbsp;证&nbsp;&nbsp;码:
+				<input name="rand" type="text" class="textInput2" size="4" maxlength="4" />&nbsp;&nbsp;
+				<img src="<c:url value='inc/rand.jsp' />" onclick="this.src='<c:url value='/inc/rand.jsp' />'" class="imgrand" />
+			  </li>
+			  <div style="height:10px;"></div>
+              <li >
+				<input type="submit" value="确定注册" class="button button-raised button-pill button-primary button-small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="reset" value="   重置    " class="button button-caution button-raised  button-pill button-primary button-small">
+               
+				<input type="hidden" name="fromPage" value="/Customer_Reg.jsp" />
+                <input type="hidden" name="msg" value="/msg.jsp" />
+              </li>
+              <li>
+              			  <div style="height:10px;"></div>
+              <a href="<c:url value='/Customer_Login.jsp' />">&gt;&gt;我已有账号，我要登录</a></li>
+            </ul>
+            </form>
+            </div></div>
+
+</div>
+  <script language="javascript" >
+  <!--
+        var msg_username_empty = "<img src='images/check_error.gif'  /> 用户名不能为空。";
+		var msg_username_shorter = "<img src='images/check_error.gif'  /> 对不起，您输入的用户名小于3个字符, 请输入一个较长的用户名。";
+		var msg_username_invalid = "<img src='images/check_error.gif'  /> 用户名非法,用户名只能包含英文字母。";
+		var msg_password_empty = "<img src='images/check_error.gif'  /> 登录密码不能为空。";
+        var msg_password_shorter = "<img src='images/check_error.gif'  /> 登录密码不能少于 3 个字符。";
+        var msg_confirm_password_invalid = "<img src='images/check_error.gif'  /> 两次输入的密码不一致，请检查后重试。 ";
+        var msg_email_empty = "<img src='images/check_error.gif'  /> 邮件地址不能为空";
+        var msg_email_format = "<img src='images/check_error.gif'  /> Email 地址无效，请返回重新填写。";
+		var msg_phone_empty = "<img src='images/check_error.gif'  /> 电话号码不能为空。";
+		var msg_phone_format = "<img src='images/check_error.gif'  /> 电话号码格式错误,请返回重新填写。";
+		var msg_can_rg = "<img src='images/check_right.gif'  />";
+		var username_empty = "用户名不能为空。";
+		var username_shorter = "用户名长度不能少于 3 个字符。";
+		var username_invalid = "用户名只能是英文字母。";
+		var password_empty = "登录密码不能为空。";
+        var password_shorter = "登录密码不能少于 3 个字符。";
+        var confirm_password_invalid = "两次输入密码不一致";
+        var email_empty = "Email地址不能为空";
+        var email_format = "Email 地址无效";
+		var phone_empty = "电话号码不能为空";
+		var phone_format = "电话号码格式错误";
+		var rand_msg = "验证码只能是4位数!";
+	-->
+  </script>
+  <div class="hr_25"></div>
+		<%@include file="Footer.jsp" %>
+</body>
+</html>
+               

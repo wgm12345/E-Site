@@ -1,0 +1,108 @@
+<%@ page language="java" contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		
+		<link href="<c:url value='/bootstrap-3.3.5-dist/css/bootstrap.css' />" rel="stylesheet" type="text/css" />
+    	<link href="<c:url value='/images/css/page-core.css' />" rel="stylesheet" type="text/css" />
+    	<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+    	<script type="text/javascript" src="<c:url value='/bootstrap-3.3.5-dist/js/bootstrap.js' />"></script>
+		
+		<script src="js/jquery/jquery-1.10.0.js" type=text/javascript></script>
+		<script src="js/jquery/jquery.validate-1.13.1.js" type="text/javascript"></script>
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/main.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/reset.css' />" rel="stylesheet" type="text/css" />
+		
+		
+		
+		<title>下订单</title>
+		<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+	</head>
+	<body>
+	<%@include file="/Header.jsp" %>
+		<div id="container">
+		<div class="shoppingCart comWidth">
+		<div class="shopping_item">
+				<h3 class="shopping_tit">
+					下订单
+				</h3>
+                <form action="<c:url value='/servlet/OrderServlet' />" name="sendorder" method="post" onsubmit="return checkSendOrder();" >
+                    <table border="0" align="center" cellpadding="0" cellspacing="0" class="pay">
+                      <tr>
+                        <th>订单号：</th>
+                        <td>${sessionScope.mcCart.orderId}&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>所购商品种类数：</th>
+                        <td>${sessionScope.mcCart.mcTypeCount}&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>所购商品总件数：</th>
+                        <td>${sessionScope.mcCart.mcCount}&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>价格总计：</th>
+                        <td>￥${sessionScope.mcCart.totalPrice}&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>下单日期：</th>
+                        <td>${sessionScope.mcCart.dgdate}&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>付款方式：</th>
+                        <td>${param.spaytype}&nbsp;(1表示货到付款，2表示支付宝，3表示财付通)</td>
+                      </tr>
+                      <tr>
+                        <th>收货人：</th>
+                        <td><input type="text" name="ssname" class="textInput" value="${sessionScope.user.cname}" />&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>收货地址：</th>
+                        <td><input type="text" name="ssaddress" class="textInput" value="${sessionScope.user.caddress}" />&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>收货人电话：</th>
+                        <td><input type="text" name="ssphone" class="textInput" value="${sessionScope.user.cphone}" />&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <th>收货人邮箱：</th>
+                        <td><input type="text" name="ssemail" class="textInput" value="${sessionScope.user.cemail}" />&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center" style=" padding-left:35%;">
+                          <input type="hidden" name="nid" value="${sessionScope.mcCart.orderId}" />
+                          <input type="hidden" name="scuser" value="${sessionScope.user.cid}" />
+                          <input type="hidden" name="nmctypesize" value="${sessionScope.mcCart.mcTypeCount}" />
+                          <input type="hidden" name="nmcsize" value="${sessionScope.mcCart.mcCount}" />
+                          <input type="hidden" name="dgdate" value="${sessionScope.mcCart.dgdate}" />
+                          <input type="hidden" name="spaytype" value="${param.spaytype}" />
+                          <input type="hidden" name="sstatus" value="2" />
+                          <input type="hidden" name="act" value="sendorder" />
+                          <input type="submit" value="确定下单" />&nbsp;&nbsp;<input type="reset" value="重置信息" /></td>
+                        </tr>
+                    </table>
+                    </form>
+			</div></div>
+	
+		</div>
+		<div class="hr_25"></div>
+		<%@include file="/Footer.jsp" %>
+  <script language="javascript">
+		var ssname_empty = "收货人不能为空";
+		var ssaddress_empty = "收货人地址不能为空。";
+		var sscode_empty = "收货人邮编不能为空。";
+		var ssphone_empty = "收货人电话不能为空.";
+		var ssemail_empty = "收货人Email不能为空";
+		var phone_format = "电话格式错误";
+  </script>
+	</body>
+</html>

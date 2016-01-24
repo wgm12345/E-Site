@@ -1,0 +1,80 @@
+package com.esite.dao.bean;
+
+public class ProductBean {
+	/**
+	 * 商品id
+	 */
+	private String pid;
+	
+	/**
+	 * 商品名称
+	 */
+	private String pname;
+	/**
+	 * 商品描述
+	 */
+	private String pdscr;
+	private String pprice;
+	private String pimg;
+	private String psellerid;
+	private String ptype;
+	private String pstatus;
+	private String ppraise;
+	public String getPid() {
+		return pid;
+	}
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getPdscr() {
+		return pdscr;
+	}
+	public void setPdscr(String pdscr) {
+		this.pdscr = pdscr;
+	}
+	public String getPprice() {
+		return pprice;
+	}
+	public void setPprice(String pprice) {
+		this.pprice = pprice;
+	}
+	public String getPimg() {
+		return pimg;
+	}
+	public void setPimg(String pimg) {
+		this.pimg = pimg;
+	}
+	public String getPsellerid() {
+		return psellerid;
+	}
+	public void setPsellerid(String psellerid) {
+		this.psellerid = psellerid;
+	}
+	public String getPtype() {
+		return ptype;
+	}
+	public void setPtype(String ptype) {
+		this.ptype = ptype;
+	}
+	public String getPstatus() {
+		return pstatus;
+	}
+	public void setPstatus(String pstatus) {
+		this.pstatus = pstatus;
+	}
+	public String getPpraise() {
+		return ppraise;
+	}
+	public void setPpraise(String ppraise) {
+		this.ppraise = ppraise;
+	}
+	
+	
+	
+}

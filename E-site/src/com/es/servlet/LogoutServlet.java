@@ -1,0 +1,55 @@
+﻿package com.es.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * 用户退出Servlet，用于前台用户退出功能和后台管理员退出功能
+ */
+public class LogoutServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = request.getParameter("act");
+		if (action.equals("user")) {
+			HttpSession session = request.getSession();
+			if (session.getAttribute("user") != null) {
+				session.removeAttribute("user");
+				String msg = "成功退出, 3 秒后自动返回网站首页..........";
+				String fromPage = request.getContextPath() + "/Show.jsp";
+				String msgPage = request.getContextPath() + "/msg.jsp";
+				response.sendRedirect(msgPage + "?fromPage=" + fromPage
+						+ "&msg=" + java.net.URLEncoder.encode(msg, "UTF-8"));
+			}
+		} else if (action.equals("admin")) {
+			HttpSession session = request.getSession();
+			if (session.getAttribute("admin") != null) {
+				session.removeAttribute("admin");
+				String msg = "成功退出, 3 秒后自动返回网站首页..........";
+				String fromPage = request.getContextPath() + "/Show.jsp";
+				String msgPage = request.getContextPath() + "/msg.jsp";
+				response.sendRedirect(msgPage + "?fromPage=" + fromPage
+						+ "&msg=" + java.net.URLEncoder.encode(msg, "UTF-8"));
+			}
+		} else if (action.equals("seller")) {
+			HttpSession session = request.getSession();
+			if (session.getAttribute("seller") != null) {
+				session.removeAttribute("seller");
+				String msg = "成功退出, 3 秒后自动返回网站首页..........";
+				String fromPage = request.getContextPath() + "/Show.jsp";
+				String msgPage = request.getContextPath() + "/msg.jsp";
+				response.sendRedirect(msgPage + "?fromPage=" + fromPage
+						+ "&msg=" + java.net.URLEncoder.encode(msg, "UTF-8"));
+			}
+		} 
+	}
+
+}

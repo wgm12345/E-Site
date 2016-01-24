@@ -1,0 +1,22 @@
+package com.es.dao.pub;
+
+/**
+ * 判断字符串是否为空
+ * 
+ */
+public class PublicStrIsNull {
+
+	/**
+	 * 判断str是否为null.如果为空则执行替换为空字符串
+	 * 
+	 * @param str
+	 * 
+	 * @return 字符串
+	 */
+	public static String isNullStr(String str) {
+		if (str == null) {
+			str = "";
+		}
+		return str;
+	}
+}

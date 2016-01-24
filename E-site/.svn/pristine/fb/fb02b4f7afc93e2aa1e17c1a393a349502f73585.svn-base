@@ -1,0 +1,54 @@
+package com.es.dao.interf;
+
+import java.util.List;
+
+import com.es.dao.bean.order_itemBean;
+public interface order_itemDAOinterf {
+
+	/**
+	 * 获取订单条目总数.
+	 * 
+	 * @return 订单条目总数.
+	 */
+	public int getCount();
+
+	/**
+	 * 获取订单条目总数.
+	 * 
+	 * @param oid
+	 *            订单号.
+	 * @return 订单条目总数.
+	 */
+	public int getCount(int oid);
+
+	/**
+	 * 根据订单号查询所有订单条目.
+	 * 
+	 * @param oid
+	 *            订单号.
+	 * @param pastart
+	 *            结果 开始行(-1:表无此条件).
+	 * @param paend
+	 *            结果 结束行(-1:表无此条件).
+	 * @return 订单条目集.
+	 */
+	public List<order_itemBean> searchOrderItem(int oid, int pastart, int paend);
+
+	/**
+	 * 根据订单号查询所有订单条目.
+	 * 
+	 * @param oid
+	 *            订单号.
+	 * @return 订单条目集.
+	 */
+	public List<order_itemBean> searchOrderItem(int oid);
+
+	/**
+	 * 添加订单条目.
+	 * 
+	 * @param orderItemBean
+	 *            订单条目对象.
+	 * @return 添加是否成功.
+	 */
+	public boolean insertOrderItem(order_itemBean orderItemBean);
+}

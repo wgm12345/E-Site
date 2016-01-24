@@ -1,0 +1,111 @@
+<%@ page contentType="text/html; charset=gb2312" language="java"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>管理员登陆</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<script type="text/javascript" src="js/user.js"></script>
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<c:if test="${sessionScope.LoginCount <= 0}">
+		<c:remove var="LoginCount" scope="session" />
+		<script type="text/javascript">
+			alert("错误次数超过3次.浏览器自动关闭!");
+			window.opener = window;
+			window.close();
+		</script>
+		</c:if>
+		<style type="text/css">
+		body {
+			color: white;
+		}
+		</style>
+	</head>
+	<body style="background: #278296">
+		<form method="post" action="<c:url value='/servlet/AdminLoginServlet' />"
+			name="AdminLogin" onsubmit="return checkAdminLoginForm();">
+			<input type="hidden" name="fromPage" value="/Admin_Login.jsp" />
+			<table cellspacing="0" cellpadding="0" style="margin-top: 100px"
+				align="center">
+				<tr>
+					<td>
+						<img src="<c:url value='/images/login.png' />" width="178" height="256" border="0" />
+					</td>
+					<td style="padding-left: 50px">
+						<table>
+							<tr>
+								<td>
+									管理员姓名：
+								</td>
+								<td>
+									<input type="text" name="suser" value="${cookie.admin.value}" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									管理员密码：
+								</td>
+								<td>
+									<input type="password" name="spwd" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									验证码：
+								</td>
+								<td>
+									<input type="text" name="rand" class="capital" maxlength="6" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" align="right">
+									<img src="<c:url value='/inc/rand2.jsp' />" onclick="this.src='<c:url value='/inc/rand2.jsp' />'"
+										class="imgrand" alt="看不清?点击更换另一个验证码." />&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<label>
+										<input type="checkbox" value="1" name="remember" />
+										请保存我这次的登录信息。
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;
+									
+								</td>
+								<td>
+									<input type="submit" value="进入管理中心" class="button" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" align="right">
+									&raquo;
+									<a href="<c:url value='/Show.jsp' />" style="color:white">返回首页</a> &raquo;
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<c:if test="${!empty param.msg}">
+		<script type="text/javascript" language="javascript" >
+			alert("${param.msg}");
+			location.href="<c:url value='/Admin_Login.jsp'/>";
+		</script>
+		</c:if>
+<script language="javascript">
+  <!--
+		var username_empty = "管理员用户名不能为空。";
+		var password_empty = "管理员密码不能为空。";
+		var rand_msg = "验证码只能是6位!"
+	-->
+</script>
+</body>
+</html>

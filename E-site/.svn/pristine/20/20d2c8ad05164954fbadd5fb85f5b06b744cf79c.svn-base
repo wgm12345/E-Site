@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+</head>
+<div id="globalLeft">
+<div class="globalModule">
+  <h3>会员中心</h3>
+  <ul class="listStyle">
+    <li><a href="<c:url value='/Customer/Change_Info.jsp' />">用户信息</a></li>
+    <li><a href="<c:url value='/Customer/Change_Pass.jsp' />">修改密码</a></li>
+    <li><a href="<c:url value='/Cart.jsp' />">查看购物车</a></li>
+    <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />">我的订单</a></li>
+    <li><a href="<c:url value='/servlet/LogoutServlet?act=user' />">退出</a></li>
+  </ul>
+</div>
+</div>

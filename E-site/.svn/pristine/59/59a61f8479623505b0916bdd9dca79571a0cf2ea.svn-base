@@ -1,0 +1,233 @@
+<%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*" errorPage="" %>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script language="javascript" src="js/js.js" type="text/javascript"></script>
+<title>狼族系列网站-用户注册</title>
+<link href="css/style.css" type="text/css" rel="stylesheet">
+<style type="text/css">
+<!--
+.STYLE1 {color: #FF0000}
+-->
+</style>
+</head>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+
+
+<body onLoad="clockon(bgclock);">
+<table width="870" height="83" border="0" align="center" cellpadding="0" cellspacing="0" background="images/land_01.gif">
+  <tr>
+    <td width="200">&nbsp;</td>
+    <td width="670" valign="top"><table width="647" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="647" height="56" valign="bottom">
+		
+		 <a href="#" class="a3">狼族电脑网</a> &nbsp;&nbsp;&nbsp;<a href="#" class="a3">狼族汽车网</a>&nbsp;&nbsp; &nbsp;<a href="#"  class="a3">狼族游戏网</a> &nbsp;&nbsp;&nbsp;<a href="#" class="a3">狼族图书网</a>&nbsp; &nbsp;&nbsp;<a href="#" class="a3">狼族亲子网</a> &nbsp;&nbsp;<a href="#" class="a3">&nbsp;狼族交友网</a> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="a3">狼族编程网</a> &nbsp;&nbsp;&nbsp;<a href="#" class="a3">PC购物网</a>		</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<table width="870" height="29" border="0" align="center" cellpadding="0" cellspacing="0" background="images/land_02.gif">
+  <tr>
+    <td width="656">&nbsp;&nbsp;&nbsp;<span class="word_white">用户注册</span>	</td>
+    <td width="214"><font color="#BEEBFF">
+      <div id="bgclock"></div></font>
+  </td></tr>
+</table>
+
+
+
+
+<table width="870" height="133" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="images/land_03.gif" width="870" height="133"></td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table width="870" border="00" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+  <tr>
+    <td width="172" valign="top" bgcolor="#FFFFFF"><img src="images/land_11.gif" width="270" height="497" border="0" usemap="#Map"></td>
+    <td width="698" valign="top"><table width="543" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="543"><img src="images/land_14.gif" width="601" height="53"></td>
+      </tr>
+    </table>
+      <table width="601" border="0" cellpadding="0" cellspacing="0" background="images/land_15.gif">
+        <tr>
+          <td height="137">
+		  
+		  <table width="518" border="0" align="center" cellpadding="0" cellspacing="0">
+      <s:form action="userInfo_saveUserInfo">      
+      
+        <tr>
+          <td width="106" height="30">用户名：</td>
+          <td height="30"><s:textfield name="account"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'account'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">密码：</td>
+          <td height="30"><s:password name="password"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'password'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">确认密码：</td>
+          <td height="30"><s:password name="repassword"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'repassword'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">密码保护问题：</td>
+          <td height="30"><s:select name="question" list="{'你的父亲叫什么名字','你的母亲叫什么名字','你的出生日期是多少','你是那所大学毕业的','你的爱好是什么'}"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">密码保护答案：</td>
+          <td height="30"><s:textfield name="result"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'reslut'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">&nbsp;</td>
+          <td height="30" colspan="2"><span class="STYLE1">一旦填写就不可更改，请紧记自己的保护问题和答案</span></td>
+        </tr>
+        <tr>
+          <td height="30">Email：</td>
+          <td height="30"><s:textfield name="email"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+      
+        <tr>
+          <td height="30">姓名：</td>
+          <td height="30"><s:textfield name="realName"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">身份证号：</td>
+          <td height="30"><s:textfield name="iDCard"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">生日：</td>
+          <td height="30"><s:textfield name="birthday"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'birthday'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">性别：</td>
+          <td height="30"><s:radio name="sex" list="{'男','女' }" value="%{'男'}" cssClass="cannelBorder"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">现在所在地：</td>
+          <td height="30"><s:textfield name="spaceForm"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">学历：</td>
+          <td height="30"><s:select name="schoolAge" list="{'大专','本科','研究生'}"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">职业：</td>
+          <td height="30"><s:textfield name="profession"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">收入：</td>
+          <td height="30"><s:select name="income" list="{'800-1000','1000-2000','2000-3000','3000-4000','4000以上'}"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3">您联系方式</td>
+        </tr>
+        <tr>
+          <td height="30">联系电话：</td>
+          <td height="30"><s:textfield name="tel"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">QQ号码：</td>
+          <td height="30"><s:textfield name="qqNumber"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'qqNumber'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">MSN号码：</td>
+          <td height="30"><s:textfield name="msnNumber"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'msnNumber'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">个人主页：</td>
+          <td height="30"><s:textfield name="selfPage"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">联系地址：</td>
+          <td height="30"><s:textfield name="address"/></td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">邮政编码：</td>
+          <td height="30"><s:textfield name="post"/></td>
+          <td height="30"><s:fielderror><s:param value="%{'post'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+      
+        <tr>
+          <td height="30">注册校验：</td>
+          <td width="129" height="30"><s:textfield name="code"/></td>
+          <td width="261"><s:fielderror><s:param value="%{'code'}"/></s:fielderror>&nbsp;</td>
+        </tr>
+		 <tr>
+          <td height="30">&nbsp;</td>
+          <td height="30"><a href="#bottom" onClick="reload()"><img border=0 src="image.jsp" name="checkCode"></a></td>
+          <td height="30">&nbsp;</td>
+		 </tr>
+		 <tr>
+          <td height="30" colspan="3" align="center">
+		  
+		  <s:submit value="" cssStyle="background-image:url(images/land_17.gif);border:0;width:245;height:43"/>
+		  
+		  </td>
+        </tr>
+         <tr>
+          <td height="30" colspan="3" align="center">&nbsp;
+          <s:property value="#request.inforamtion"/>
+          
+          </td>
+        </tr>
+        
+        </s:form>
+      </table>
+		  
+		  
+		  </td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td><img src="images/land_16.gif" width="601" height="15"></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<table width="800" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="images/land_13.gif" width="870" height="75"></td>
+  </tr>
+</table>
+
+
+<map name="Map"><area shape="rect" coords="29,223,232,255" href="index.jsp">
+</map></body>
+</html>

@@ -1,0 +1,226 @@
+package com.es.dao.bean;
+
+import java.io.Serializable;
+
+public class ProductBean implements Serializable {
+
+	/**
+	 * 生成serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 商品编号
+	 */
+	private String fid;
+
+	/**
+	 * 商品名称
+	 */
+	private String fname;
+
+	/**
+	 * 商品描述
+	 */
+	private String fdescription;
+
+	/**
+	 * 商品价格
+	 */
+	private String fprice;
+
+	/**
+	 * 商品图片
+	 */
+	private String fimg;
+	/**
+	 * 卖家编号
+	 */
+	private String sid;
+	/**
+	 * 所属类
+	 */
+	private String ftype;
+	/**
+	 * 是否删除
+	 */
+	private String fstatus;
+
+	/**
+	 * 添加点赞数目
+	 */
+	private String fpraise;
+
+
+
+	/**
+	 * 获取商品编号
+	 * 
+	 * @return 商品编号
+	 */
+	public String getFid() {
+		return fid;
+	}
+
+	/**
+	 * 设置商品编号
+	 * 
+	 * @param fid
+	 *            商品编号
+	 */
+	public void setFid(String fid) {
+		this.fid = fid;
+	}
+	
+	/**
+	 * 获取点赞数目
+	 * 
+	 * @return 点赞数目
+	 */
+	public String getFpraise() {
+		return fpraise;
+	}
+
+	/**
+	 * 设置点赞数目
+	 * 
+	 * @param fpraise
+	 *            点赞数目
+	 */
+	public void setFpraise(String fpraise) {
+		this.fpraise = fpraise;
+	}
+	
+	/**
+	 * 获取商家编号
+	 * 
+	 * @return 商家编号
+	 */
+	public String getSid() {
+		return sid;
+	}
+
+	/**
+	 * 设置商家编号
+	 * 
+	 * @param sid
+	 *            商家编号
+	 */
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	/**
+	 * 获取所属类
+	 * 
+	 * @return 所属类
+	 */
+	public String getFtype() {
+		return ftype;
+	}
+
+	/**
+	 * 设置所属类
+	 * 
+	 * @param ftype
+	 *            所属类
+	 */
+	public void setFtype(String ftype) {
+		this.ftype = ftype;
+	}
+
+
+	/**
+	 * 获取商品价格
+	 * 
+	 * @return 商品价格
+	 */
+	public String getFprice() {
+		return fprice;
+	}
+
+	/**
+	 * 设置商品价格
+	 * 
+	 * @param fprice
+	 *            商品价格
+	 */
+	public void setFprice(String fprice) {
+		this.fprice = fprice;
+	}
+
+	/**
+	 * 获取商品描述
+	 * 
+	 * @return 商品描述
+	 */
+	public String getFdescription() {
+		return fdescription;
+	}
+
+	/**
+	 * 设置商品描述
+	 * 
+	 * @param fdescription
+	 *            商品描述
+	 */
+	public void setFdescription(String fdescription) {
+		this.fdescription = fdescription;
+	}
+
+	/**
+	 * 获取商品图片
+	 * 
+	 * @return 商品图片
+	 */
+	public String getFimg() {
+		return fimg;
+	}
+
+	/**
+	 * 设置商品图片
+	 * 
+	 * @param fimg
+	 *            商品图片
+	 */
+	public void setFimg(String fimg) {
+		this.fimg = fimg;
+	}
+
+	/**
+	 * 获取是否缺货信息
+	 * 
+	 * @return 是否缺货
+	 */
+	public String getFstatus() {
+		return fstatus;
+	}
+
+	/**
+	 * 设置是否缺货
+	 * 
+	 * @param fstatus
+	 *            是否缺货
+	 */
+	public void setFstatus(String fstatus) {
+		this.fstatus = fstatus;
+	}
+
+	/**
+	 * 获取商品名称
+	 * 
+	 * @return 商品名称
+	 */
+	public String getFname() {
+		return fname;
+	}
+
+	/**
+	 * 设置商品名称
+	 * 
+	 * @param fname
+	 *            商品名称
+	 */
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+}

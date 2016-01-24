@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<%@ page import="java.net.*" %> 
+<c:choose>
+	<c:when test="${sessionScope.LoginCount <= 0}">
+		<c:remove var="LoginCount" scope="session" />
+		<script type="text/javascript">
+			alert("错误次数超过3次.浏览器自动关闭!");
+			window.opener = window;
+			window.close();
+		</script>
+	</c:when>
+	<c:when test="${not empty param.msg && not empty param.fromPage}">
+		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+				<meta http-equiv="pragma" content="no-cache" />
+				<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+				<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+				<c:choose>
+				<c:when test="${empty param.success}">
+					<meta http-equiv="refresh" content="3;url=${param.fromPage}; charset=gb2312" />
+				</c:when>
+				<c:otherwise>
+					<meta http-equiv="refresh" content="3;url=${param.fromPage}?success=${param.success}; charset=gb2312" />
+				</c:otherwise>
+				</c:choose>
+				<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+				<title>系统提示</title>
+			</head>
+			<body>
+				<div id="container">
+					<div id="globalHeader">
+						<p id="logo">
+							<a href="#"><img src="<c:url value='/images/logo.jpg' />" alt="logo" />
+							</a>
+						</p>
+  <ul id="globalTopNav">
+      <li><a href="<c:url value='/Customer_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/Customer_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li><a href="<c:url value='/Seller_Login.jsp' />" >店家管理</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+					</div>
+					<div id="globalNav">
+						<ul>
+							<li id="currentPage">
+								<a href="<c:url value='/Show.jsp' />">首页</a>
+							</li>
+							<li>
+								<a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a>
+							</li>
+							<li>
+								<a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a>
+							</li>
+						</ul>
+					</div>
+					<div id="urHere" class="globalModule globalFrame"
+						style="margin-top:10px">
+						<h3>
+							当前位置:
+							<a href="<c:url value='/Show.jsp' />">首页</a>
+							<code>
+								&gt;
+							</code>
+							系统提示
+						</h3>
+					</div>
+					<div id="globalMsg" class="globalModule globalFrame">
+			<%
+						String args= request.getParameter("msg");
+                         String str = new String(args.getBytes("ISO-8859-1"),"UTF-8");
+			%>
+			<%=str%>
+			<br />
+						<c:choose>
+						<c:when test="${empty param.success}">
+							<a href="${param.fromPage}">如果您的浏览器没有自动跳转，请点击这里</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${param.fromPage}?success=${param.success}">如果您的浏览器没有自动跳转，请点击这里</a>
+						</c:otherwise>
+						</c:choose>
+						
+					</div>
+					<div id="globalFooter">
+						<div id="footerLine">
+							<img src="<c:url value='/images/footer_line.gif' />" alt="" />
+						</div>
+						<p id="footerNav">
+							<a href="#">免责条款</a> |
+							<a href="#">隐私保护</a> |
+							<a href="#">咨询热点</a> |
+							<a href="#">联系我们</a> |
+							<a href="#">公司简介</a> |
+							<a href="#">预留功能</a> |
+							<a href="<c:url value='/Admin_Login.jsp' />">后台管理</a>
+						</p>
+					</div>
+				</div>
+			</body>
+		</html>
+	</c:when>
+</c:choose>

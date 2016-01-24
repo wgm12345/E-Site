@@ -1,0 +1,275 @@
+<%@page language="java" contentType="text/html;charset=gb2312"%>
+	<%@taglib prefix="c" uri="/WEB-INF/c.tld"%> <%@taglib
+		prefix="fmt" uri="/WEB-INF/fmt.tld"%> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+<link href="<c:url value='/images/css/style.css' />" rel="stylesheet"
+	type="text/css" />
+<title>网站首页</title>
+<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+<script language="javascript">
+	
+		function buyFood(fid,sid) {
+			location.href="CartServlet?fromPage=/Shop_Info.jsp&fid=" + fid +"&sid="+ sid+  "&act=buyFood";
+		}
+		function praise(fid,sid) {
+			location.href="MainServlet?fromPage=/Shop_Info.jsp&fid=" + fid +"&sid="+ sid+ "&act=praiseFood";
+		}
+		function praiseShop(sid) {
+			location.href="MainServlet?fromPage=/Shop_Info.jsp&sid="+ sid+ "&act=praiseShop";
+		}
+		function showFood(fid)
+		{
+				location.href="MainServlet?fromPage=/ShowGoodDetail.jsp&fid=" + fid + "&act=showFood";
+				 
+		}
+		function pagingOnClick(num){
+			if(num==1){
+				searchForm.curPage.value=1;
+			}
+			if(num==2){
+				searchForm.curPage.value=${curPage} - 1;
+			}
+			if(num==3){
+				searchForm.curPage.value=${curPage} + 1;
+			}
+			if(num==4){
+				searchForm.curPage.value=${pageCount};
+			}
+			searchForm.submit();
+		}
+		</script>
+</head>
+<body>
+	<div id="container">
+		<div id="globalHeader">
+			<p id="logo">
+				<a href="<c:url value='/Show.jsp' />"><img
+					src="<c:url value='/images/logo.jpg' />" /> </a>
+			</p>
+			<ul id="globalTopNav">
+				<li><a href="<c:url value='/Customer_Reg.jsp' />">用户注册</a></li>
+				<li><a href="<c:url value='/Customer_Login.jsp' />">用户登陆</a></li>
+				<li><a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a></li>
+				<li><a href="<c:url value='/Cart.jsp' />">购物车</a></li>
+				<li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a></li>
+				<li><a href="<c:url value='/Seller_Login.jsp' />">店家管理</a></li>
+				<li id="globalTopNavLast"><a
+					href="<c:url value='/Admin_Login.jsp' />">后台管理</a></li>
+				<li id="globalTopNavRight">&nbsp;</li>
+			</ul>
+		</div>
+		<div id="globalNav">
+			<ul>
+				<li id="currentPage"><a href="<c:url value='/Show.jsp' />">首页</a>
+				</li>
+				<li><a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a>
+				</li>
+				<li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a>
+				</li>
+			</ul>
+		</div>
+		<div id="ECS_MEMBERZONE">
+			<c:choose>
+				<c:when test="${sessionScope.user ne null}">
+					<span class="welcome">您好，${sessionScope.user.cid}，欢迎回来!</span>
+					<span class="btnList"><a
+						href="<c:url value='/Customer/Change_Info.jsp' />">进入用户中心</a><a
+						href="<c:url value='/servlet/LogoutServlet?act=user' />">退出</a> </span>
+				</c:when>
+				<c:when test="${sessionScope.user==null}">
+					<form id="ECS_LOGINFORM" name="loginUser" method="post"
+						action="<c:url value='/servlet/LoginServlet' />"
+						onSubmit="return checkLoginForm();">
+						用户名： <input name="suser" type="text" size="8" tabindex="1"
+							value="${cookie.suser.value}" class="textInput textInputSign" />
+						密码： <input name="spwd" type="password" size="10" tabindex="2"
+							class="textInput textInputSign" /> 验证码： <input name="rand"
+							type="text" class="textInput textCaptcha" size="4" maxlength="4" />
+						&nbsp; <img src="<c:url value='/inc/rand.jsp' />"
+							onclick="this.src='<c:url value='/inc/rand.jsp' />'"
+							class="imgrand" /> <input type="image"
+							src="<c:url value='/images/btn_signin.gif' />" /> <input
+							type="hidden" name="fromPage" value="Show.jsp" /> <input
+							type="hidden" name="msg" value="/msg.jsp" /> <span
+							onclick="javascript:location.href='<c:url value='/Customer_Reg.jsp' />';"
+							style="cursor:hand;"> <img
+							src="<c:url value='/images/btn_register.gif' />" alt="注册新用户" /></span>
+					</form>
+				</c:when>
+			</c:choose>
+		</div>
+		<div id="globalLeft">
+			<div id="globalSearch" class="moduleBg">
+				<h3>
+					<img src="<c:url value='/images/search_title.png' />" alt="Search" />
+				</h3>
+				<form id="searchForm" name="searchForm" method="get"
+					action="<c:url value='/servlet/MainServlet' />">
+					<select name="selectType" id="selectType"
+						style="vertical-align:middle;">
+						<option value="s4" selected="selected">所有分类</option>
+						<option value="s0">搜索主食</option>
+						<option value="s1">搜索小吃</option>
+						<option value="s2">搜索点心饮品</option>
+
+					</select> <input type="hidden" name="fromPage" value="/Show.jsp" /> <input
+						name="skey" type="text" id="keyword" value="${param.skey}"
+						alt="请输入关键字,支持模糊查询!" class="textInput" /> <input type="image"
+						src="<c:url value='/images/btn_search.gif' />" class="vAlign" />
+					<a href="#" id="adSearch" class="vAlign">&gt;&gt;高级搜索</a> <input
+						type="hidden" name="curPage" value="1" />
+				</form>
+			</div>
+			<script type="text/javascript">
+					window.onload = function()
+					{
+					  fixpng();
+					}
+				</script>
+			<div id="ECS_CARTINFO" class="moduleBg">
+				<img src="<c:url value='/images/icon_cart.png' />" /> <a
+					href="<c:url value='/Cart.jsp' />" title="查看购物车">您的购物车中有
+					${mcCart.mcCount} 件商品，总计金额 ￥${mcCart.totalPrice}元。</a>
+			</div>
+
+		</div>
+		<div id="globalMiddle">
+			<div id="globalMiddle2">
+				<div id="globalGoodsList" class="globalModule">
+					<h3>商店信息</h3>
+					<table width="100%" class="btable">
+						<tr>
+							<td><table cellspacing="0" class="tableList">
+								
+									<tr>
+										<td>店 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:&nbsp;&nbsp;${Shop.sname}&nbsp;</td>
+									</tr>
+									<tr>
+										<td>电子邮箱:&nbsp;&nbsp;${Shop.semail}&nbsp;</td>
+									</tr>
+									<tr>
+										<td>电话号码:&nbsp;&nbsp;${Shop.sphone}&nbsp;</td>
+									</tr>
+									<tr>
+										<td>描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:&nbsp;&nbsp;${Shop.sdescription}&nbsp;</td>
+									</tr>
+									<tr>
+										<td>点&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;赞:&nbsp;&nbsp;${Shop.spraise}&nbsp;</td>
+									</tr>
+									<tr>
+										<td>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:&nbsp;&nbsp;${Shop.saddress}&nbsp;</td>
+									</tr>
+									<tr>	
+									    <td>点&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;赞:&nbsp;&nbsp;
+										    <input type="image"
+											     src="<c:url value='/images/press_praise.jpg' />"
+											     onClick="praiseShop('${Shop.sid}');"
+											     alt="点赞" />
+										 </td>
+									</tr>
+								</table></td>
+						</tr>
+					</table>
+				</div>
+				<div id="globalGoodsList" class="globalModule">
+					<h3>商品列表</h3>
+					<div class="itemList">
+						<c:if test="${empty ShopFoodList}">
+							<br />&nbsp;&nbsp;&nbsp;当前分类下没有任何商品.<br />
+						</c:if>
+						<c:forEach var="foodBean" items="${ShopFoodList}">
+							<div class="item">
+								<p class="pic">
+									<a href="<c:url value='${foodBean.fimg}' />" target="_blank"><img
+										src="<c:url value='${foodBean.fimg}' />" alt="点击图片查看大图"
+										style="width:110px;height:110px;" /> </a>
+								</p>
+								<div class="itemListInfo">
+									<p class="name">
+										名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称: ${foodBean.fname}
+									</p>
+									<p class="price">
+										单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价： <span
+											class="goodsPrice">${foodBean.fprice}</span>
+									</p>
+									<p class="price">
+										点&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;赞： <span
+											class="goodsPrice">${foodBean.fpraise}</span>
+									</p>
+									<p class="brief">
+										详细说明: <span class="goodsPrice">${foodBean.fdescription}</span>
+									</p>
+									<p class="btnList">
+										<input type="image"
+											src="<c:url value='/images/press_praise.jpg' />"
+											onClick="praise('${foodBean.fid}','${foodBean.sid}');"
+											alt="点赞" />
+									</p>
+									<p class="btnList">
+										<input type="image"
+											src="<c:url value='/images/btn_buy.gif' />"
+											onClick="buyFood('${foodBean.fid}','${foodBean.sid}');" alt="点击购买" />
+									</p>
+									<p class="btnList">
+										<button   onClick="showFood('${foodBean.fid}');">查看商品详情</button>
+									</p>
+									
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div id="pager">
+						总计 ${recordSize} 条记录，共 ${pageCount} 页，当前第 ${curPage} 页
+						<c:choose>
+							<c:when test="${curPage==1}">
+								<span>首页</span>
+								<span>上一页</span>
+							</c:when>
+							<c:otherwise>
+								<a href="#" onClick="pagingOnClick(1);return false;">首页</a>
+								<a href="#" onClick="pagingOnClick(2);return false;">上一页</a>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${curPage==pageCount}">
+								<span>下一页</span>
+								<span>尾页</span>
+							</c:when>
+							<c:otherwise>
+								<a href="#" onClick="pagingOnClick(3);return false;">下一页</a>
+								<a href="#" onClick="pagingOnClick(4);return false;">尾 页</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="globalRight"></div>
+		<div id="globalLink" class="globalModule">
+			<p>占无友情链接!</p>
+		</div>
+	</div>
+	<div id="globalFooter">
+		<div id="footerLine">
+			<img src="<c:url value='/images/footer_line.gif' />" alt="" />
+		</div>
+		<p id="footerNav">
+			<a href="#">免责条款</a> | <a href="#">隐私保护</a> | <a href="#">咨询热点</a> |
+			<a href="#">联系我们</a> | <a href="#">公司简介</a> | <a href="#">预留功能</a> |
+			<a href="<c:url value='/Admin_Login.jsp' />" target="_blank">后台管理</a>
+		</p>
+	</div>
+	<script language="javascript">
+		<!--
+			var username_empty = "用户名不能为空。";
+			var password_empty = "登录密码不能为空。";
+			var rand_msg = "验证码只能是4位数!";
+		-->;
+		</script>
+</body>
+	</html> 

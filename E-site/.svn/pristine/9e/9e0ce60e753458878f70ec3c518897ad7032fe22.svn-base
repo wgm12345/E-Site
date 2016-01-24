@@ -1,0 +1,88 @@
+﻿package com.es.dao.interf;
+
+import java.util.List;
+
+import com.es.dao.bean.sellerBean;
+public interface sellerDAOinterf {
+//sid,spwd,sname,sphone,saddress,sdescription,semail,spraise,sregdate,slastdate,
+	/**
+	 * 获取用户总数.
+	 * 
+	 * @return 用户总数.
+	 */
+	public int getCount();
+
+	/**
+	 * 获取用户总数.
+	 * 
+	 * @param sid
+	 *            注册用户名(精确查) (null:表无此条件).
+	 * @param sname
+	 *            用户姓名(模糊查) (null:表无此条件).
+	 * @return 用户总数.
+	 */
+	public int getCount(String sid, String sname);
+
+	/**
+	 * 查询用户.
+	 * 
+	 * @param sid
+	 *            注册用户名(精确查) (null:表无此条件).
+	 * @param sname
+	 *            用户姓名(模糊查) (null:表无此条件).
+	 * @param pastart
+	 *            记录 开始行 (-1:表无此条件).
+	 * @param paend
+	 *            记录 结束行 (-1:表无此条件).
+	 * @return 用户对象集.
+	 */
+	public List<sellerBean> searchUser(String sid, String sname,int pastart, int paend);
+
+	/**
+	 * 查询用户.
+	 * 
+	 * @param sid
+	 *            注册用户名(精确查).
+	 * @return 用户对象.
+	 */
+	public sellerBean searchUser(String sid);
+
+	/**
+	 * 注册用户.
+	 * 
+	 * @param userBean
+	 *            用户对象.
+	 * @return 添加是否成功.
+	 */
+	//sid,spwd,sname,sphone,saddress,sdescription,semail,spraise,sregdate,slastdate,
+	public boolean insertUser(sellerBean userBean);
+
+	/**
+	 * 删除用户.
+	 * 
+	 * @param sid
+	 *            用户名.
+	 * @return 删除是否成功.
+	 */
+	public boolean deleteUser(String sid);
+
+	/**
+	 * 修改用户基础信息 (根据sid修改spwd,sname,sphone,saddress,sdescription,semail,spraise,sregdate,slastdate字段的值).
+	 * 
+	 * @param userBean
+	 *            用户对象.
+	 * @return 修改是否成功.
+	 */
+	public boolean updateUser(sellerBean userBean);
+
+	/**
+	 * 修改密码.
+	 * 
+	 * @param sid
+	 *            注册用户名.
+	 * @param spwd
+	 *            密码.
+	 * @return 修改是否成功.
+	 */
+	public boolean updateUserForPWD(String sid, String spwd);
+}

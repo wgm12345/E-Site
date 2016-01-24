@@ -1,0 +1,214 @@
+package com.es.bo;
+
+import java.util.HashMap;
+import java.util.Iterator;
+
+import com.es.dao.bean.foodBean;
+import com.es.dao.factory.DAOFactory;
+import com.es.dao.pub.PublicGetDate;
+
+/**
+ * 购物车类，有添加商品。删除商品。修改商品，清空商品等功能
+ */
+public class Cart {
+
+	/**
+	 * 存放商品Map
+	 */
+	private HashMap<Integer,Mc> mcMap = new HashMap<Integer,Mc>();
+	
+	/**
+	 * 商品总类数
+	 */
+	private int mcTypeCount = 0;
+	
+	/**
+	 * 商品总件数
+	 */
+	private int mcCount = 0;
+	
+	/**
+	 * 商品总价
+	 */
+	private double totalPrice = 0.0;
+	
+	/**
+	 * 订单号
+	 */
+	private int orderId =DAOFactory.createOrdersDAO().getCount()+1;
+	
+	/**
+	 * 下单时间
+	 */
+	private String dgdate = PublicGetDate.getDateTime();
+
+	/**
+	 * 获取下单时间
+	 * @return 下单时间
+	 */
+	public String getDgdate() {
+		return dgdate;
+	}
+
+	/**
+	 * 获取商品总数
+	 * @return 商品总数
+	 */
+	public int getMcCount() {
+		return mcCount;
+	}
+
+	/**
+	 * 设置商品总数
+	 * 
+	 * @param mcCount
+	 * 			商品总数
+	 */
+	public void setMcCount(int mcCount) {
+		this.mcCount = mcCount;
+	}
+
+	/**
+	 * 获取存放商品Map
+	 * 
+	 * @return 商品Map
+	 */
+	public HashMap<Integer, Mc> getMcMap() {
+		return mcMap;
+	}
+
+	/**
+	 * 设置存放商品Map
+	 * 
+	 * @param mcMap
+	 * 			商品Map
+	 */
+	public void setMcMap(HashMap<Integer, Mc> mcMap) {
+		this.mcMap = mcMap;
+	}
+
+	/**
+	 * 获取商品总类数
+	 * 
+	 * @return 商品总类数
+	 */
+	public int getMcTypeCount() {
+		return mcTypeCount;
+	}
+
+	/**
+	 * 设置商品总类数
+	 * 
+	 * @param mcTypeCount
+	 * 			商品总类数
+	 */
+	public void setMcTypeCount(int mcTypeCount) {
+		this.mcTypeCount = mcTypeCount;
+	}
+
+	/**
+	 * 获取商品总价
+	 * 
+	 * @return 商品总价
+	 */
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	/**
+	 * 设置商品总价
+	 * 
+	 * @param totalPrice
+	 * 			商品总价
+	 */
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	/**
+	 * 获取订单编号
+	 * 
+	 * @return 订单编号
+	 */
+	public int getOrderId() {
+		return orderId;
+	}
+	/**
+	 * 查询是否换店家
+	 * 
+	 * @param sid
+	 * 			店铺编号
+	 */
+	public boolean isShop(String sid) {
+		for (Iterator i = mcMap.keySet().iterator(); i.hasNext();){
+			Mc x = mcMap.get(i.next());
+			if(x.getMcBean().getSid().equals(sid))
+				return true;	
+		}
+		return false;
+	}
+	/**
+	 * 添加商品到购物车
+	 * 
+	 * @param nid
+	 * 			商品编号
+	 */
+	public void addMc(int nid) {
+		Mc mc = mcMap.get(nid);
+		if(mc == null) {
+			mc = new Mc();
+			foodBean mcBean = DAOFactory.createFoodDAO().selectFood(String.valueOf(nid));
+			mc.setMcBean(mcBean);
+			mc.setCount(1);
+			mcTypeCount ++;
+			mcCount ++;
+			totalPrice += Double.parseDouble(mc.getMcBean().getFprice());
+			mcMap.put(nid,mc);		
+		} else {
+			mcCount ++;
+			totalPrice += Double.parseDouble(mc.getMcBean().getFprice());
+			mc.setCount(mc.getCount() + 1);
+		}
+	}
+	
+	/**
+	 * 修改购物车内商品数量
+	 * 
+	 * @param nid
+	 * 			商品编号
+	 * @param newCount
+	 * 			新数量
+	 */
+	public void updateMc(int nid , int newCount) {
+		Mc mc = mcMap.get(nid);
+		int old_Count = mc.getCount();
+		int def_Count = newCount - old_Count;
+		mc.setCount(newCount);
+		mcCount += def_Count;
+		totalPrice += Double.parseDouble(mc.getMcBean().getFprice()) * def_Count;
+	}
+	
+	/**
+	 * 删除购物车内商品
+	 * 
+	 * @param nid
+	 * 			商品编号
+	 */
+	public void deleteMc(int nid) {
+		Mc mc = mcMap.get(nid);
+		mcCount -= mc.getCount();
+		totalPrice -= mc.getCount()*Double.parseDouble(mc.getMcBean().getFprice());
+		mcTypeCount --;
+		mcMap.remove(nid);
+	}
+	
+	/**
+	 * 清空购物车
+	 */
+	public void clearMc() {
+		totalPrice = 0.0;
+		mcTypeCount = 0;
+		mcMap.clear();
+		mcCount = 0;
+	}
+}

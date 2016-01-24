@@ -1,0 +1,189 @@
+<%@ page language="java" contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<c:if test="${foodList==null}">
+	<c:redirect url="/servlet/MainServlet?fromPage=/Show.jsp"></c:redirect>
+</c:if>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		
+		
+
+    	<link href="<c:url value='/images/css/page-core.css' />" rel="stylesheet" type="text/css" />
+    	<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+
+		
+		<script src="js/jquery/jquery-1.10.0.js" type=text/javascript></script>
+		<script src="js/jquery/jquery.validate-1.13.1.js" type="text/javascript"></script>
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/main.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/reset.css' />" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+		<title>网站首页</title>
+		
+		
+		<script language="javascript">
+	
+		function praise(fid) {
+			location.href="MainServlet?fromPage=/Show.jsp&fid=" + fid + "&act=praiseFood";
+		}
+		function showShopInfo(sid) {
+		    location.href="MainServlet?fromPage=/Shop_Info.jsp&sid="+ sid+ "&act=enterShop";
+	    }
+		function pagingOnClick(num){
+			if(num==1){
+				searchForm.curPage.value=1;
+			}
+			if(num==2){
+				searchForm.curPage.value=${curPage} - 1;
+			}
+			if(num==3){
+				searchForm.curPage.value=${curPage} + 1;
+			}
+			if(num==4){
+				searchForm.curPage.value=${pageCount};
+			}
+			searchForm.submit();
+		}
+		</script>
+	</head>
+	<body>
+	<%@include file="Header.jsp" %>
+	
+<div class="b-page-body">
+    <div class="index-container" id="index_container">
+        <!--购物车-->
+        <div id="ECS_CARTINFO" class="container-row">
+            <img src="<c:url value='/images/icon_cart.png' />" />
+            <a href="<c:url value='/Cart.jsp' />" title="查看购物车">您的购物车中有 ${mcCart.mcCount} 件商品，总计金额 ￥${mcCart.totalPrice}元。</a>
+        </div>
+        
+         <!--零食区-->
+        <div class="container-row">
+            <div class="b-section-head">
+                <div class="b-head">
+                    <span class="b-head-i"></span>
+                    <span class="b-head-t">
+                        <a href="/video/douga.html" title="动画"><h2>零食区</h2></a>
+                    </span>
+                </div>
+            </div>
+            <div class="b-section-body">
+                <div class="b-l">
+                    <div class="b-head">
+                        <ul class="b-slt-tab">
+                            <li class="on" data-source="/index/ding.json" push=""><span class="b-tab-text">热门商品</span></li>
+                            <li data-source="/index/ranking.json"><span class="b-tab-text">最新上架</span></li>
+                        </ul>
+                        <div class="b-link-more"><a href="/video/douga.html">更多<i class="b-icon b-icon-arrow-r"></i></a></div>
+                    </div>
+                    <div class="b-body">
+                        <ul class="vidbox v-list">
+                            <c:if test="${empty foodList}"><br/>&nbsp;&nbsp;&nbsp;当前分类下没有任何商品.<br/></c:if>
+                            <c:forEach var="foodBean" items="${foodList}">
+                                <li>
+                                    <div class="v m300">
+                                        <a class="preview" >
+                                            <div class="medal"></div>
+                                            <div class="original"></div>
+                                            <div class="border"></div>
+                                            <!--<img src="http://i2.hdslb.com/320_200/u_user/6f1b8d50849d2dc27881f054464aa4c7.jpg" loaded="loaded"  style="opacity: 1;">-->
+                                            <img src="<c:url value='${foodBean.fimg}' />" alt="点击图片查看具体商品" loaded="loaded"  style="opacity: 1;"/>
+                                        </a>
+                                        <a href=“#” target="_blank" title=“”>
+                                            <div class="t">
+                                                <p class="name">
+                                                    名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:
+                                                    <span class="goodsPrice">${foodBean.fname}</span>
+                                                </p>
+                                                <p class="price">
+                                                    单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：
+                                                    <span class="goodsPrice">${foodBean.fprice}</span>
+                                                </p>
+                                                <p class="price">
+                                                    点&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;赞：
+                                                    <span class="goodsPrice">${foodBean.fpraise}</span>
+                                                </p>
+                                                <p class="brief">
+                                                    详细说明:
+                                                    <span class="goodsPrice">${foodBean.fdescription}</span>
+                                                </p>
+                                                <p class="btnList">
+                                                    <input type="image" src="<c:url value='/images/press_praise.jpg' />" onClick="praise('${foodBean.fid}');" alt="点赞" />
+                                                </p>
+                                                <p class="btnList">
+                                                    <input type="image" src="<c:url value='/images/enter_shop.jpg' />" onClick="showShopInfo('${foodBean.sid}');" alt="进入店铺" />
+                                                </p>
+                                            </div>
+                                            <div class="i">
+                                                <span><i class="b-icon b-icon-v-play"></i>购买</span><span><i class="b-icon b-icon-v-dm"></i>查看</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+                <div class="b-r">
+                    <div class="b-head">
+                        <div class="left"><span class="b-head-t">排行</span></div>
+                    </div>
+                    <div class="b-body">
+                        <ul class="rlist">
+                            <li data-gk="1204316" data-sc="2218" data-pl="5718" data-dm="80984" data-up="哔哩哔哩番剧" data-subtitle="" data-lm="" data-tg="2015-12-25 19:12" data-txt="#13 福神的传说（完）" data-yb="12732" class="on">
+                                <i class="number n1">1</i>
+                                <div class="preview">
+                                    <a href="/video/av3448965/" title="【10月/完结】野良神 ARAGOTO 第二季 13【独家正版】 播放:1204316 24:14" target="_blank">
+                                        <img data-img="" src="http://i2.hdslb.com/320_200/video/83/8389492cdceb85cdade3bc43c17bb699.jpg" loaded="loaded" alt="【10月/完结】野良神 ARAGOTO 第二季 13【独家正版】" style="opacity: 1;">
+                                    </a>
+                                </div>
+                                <a class="rl-info" href="/video/av3448965/" title="【10月/完结】野良神 ARAGOTO 第二季 13【独家正版】 播放:1204316 24:14" target="_blank">
+                                    <div class="title t">【10月/完结】野良神 ARAGOTO 第二季 13【独家正版】</div>
+                                    <div class="i">
+                                        <b class="pts" title="综合评分: 120.4万">综合评分：120.4万</b>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <h4>
+                                    <a href="#">店铺排行&gt;&gt;</a>
+                                </h4>
+                                <c:forEach var="shopRank" items="${shopRankList}">
+                                    <a href="#" onclick="showShopInfo('${shopRank.sid}');">${shopRank.sname}</a>&nbsp;&nbsp;
+                                    <span class="goodsPrice">${shopRank.spraise}</span>
+                                    <br />
+                                </c:forEach>
+                            </li>
+                            <li>
+                                <h4>
+                                    <a href="#">主食排行&gt;&gt;</a>
+                                </h4>
+                                <c:forEach var="mainfoodRank" items="${mainfoodRankList}">
+                                    <a href="#" onclick="showShopInfo('${mainfoodRank.sid}');">${mainfoodRank.fname}</a>&nbsp;&nbsp;
+                                    <span class="goodsPrice">${mainfoodRank.fpraise}</span><br />
+                                </c:forEach>
+                            </li>
+
+                        </ul>
+                        <div class="more-link">
+                            <a href="/video/bangumi-two-1.html#!order=hot&amp;page=1&amp;range=2015-12-25,2016-01-01">查看更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--运动区-->
+        <!--电子区-->
+    </div>
+</div>
+<%@include file="Footer.jsp" %>
+		
+	</body>
+</html>

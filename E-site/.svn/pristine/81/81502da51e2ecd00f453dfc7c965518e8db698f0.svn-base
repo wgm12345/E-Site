@@ -1,0 +1,222 @@
+﻿/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_3306
+Source Server Version : 50610
+Source Host           : localhost:3306
+Source Database       : e-site
+
+Target Server Type    : MYSQL
+Target Server Version : 50610
+File Encoding         : 65001
+
+Date: 2015-12-07 13:54:20
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `customer`  顾客表
+-- ----------------------------
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `cid` varchar(20) NOT NULL COMMENT '用户ID',
+  `cpwd` varchar(32) DEFAULT NULL COMMENT '用户密码',
+  `cname` varchar(32) DEFAULT NULL COMMENT '用户名',
+  `csex` varchar(8) DEFAULT NULL COMMENT '性别',
+  `cphone` varchar(32) DEFAULT NULL COMMENT '联系电话',
+  `caddress` varchar(300) DEFAULT NULL COMMENT '地址',
+  `cemail` varchar(50) DEFAULT NULL COMMENT '用户邮箱',
+  `cregdate` varchar(50) DEFAULT NULL COMMENT '注册时间',
+  `clastdate` varchar(50) DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`cid`)   
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of customer 顾客数据
+-- ----------------------------
+INSERT INTO `customer` VALUES ('rfj', '1234', 'rfj', 'man', '42236134', '33#312', '21425@stt.com', '2015-01-04 21:19:34', '2015-01-04 21:19:34');
+INSERT INTO `customer` VALUES ('qdl', '1234', 'qdl', 'man', '2142634', '33#311', '243484923@qq.com', '2015-01-04 21:16:48', '2015-01-04 23:28:05');
+INSERT INTO `customer` VALUES ('gk', '1234', 'gk', 'man', '2154141', '33#311', '231287@120.com', '2015-01-04 21:17:52', '2015-01-07 13:33:07');
+INSERT INTO `customer` VALUES ('wgm', '1234', 'wgm', 'man', '18060480363', '33#311', '122345646@qq.com', '2015-01-04 19:55:28', '2015-01-04 19:55:28');
+
+-- ----------------------------
+-- Table structure for `product`   商品表
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `prod_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `pname` varchar(30) DEFAULT NULL COMMENT '商品名称',
+  `pdescription` varchar(300) DEFAULT NULL COMMENT '商品描述',
+  `pprice` double DEFAULT NULL COMMENT '商品价格',
+  `pimg` varchar(300) DEFAULT NULL COMMENT '商品图片',
+  `sid` varchar(20) DEFAULT NULL COMMENT '卖家ID',
+  `ptype` int(11) DEFAULT NULL COMMENT '商品类型',
+  `status` int(11) DEFAULT NULL COMMENT '商品状态',
+  `praise` int(11) DEFAULT NULL COMMENT '点赞数',
+  PRIMARY KEY (`prod_id`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `seller` (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product   商品记录
+-- ----------------------------
+INSERT INTO `product` VALUES ('1', 'BeijingDuck', '', '298', '/productImg/BeijingRoastDuckNo.0t01c78fb8a9b7a2fdaf.jpg', 'BeijingRoastDuck', '0', '1', '0');
+INSERT INTO `product` VALUES ('2', 'eggplant', '', '28', '/productImg/BeijingRoastDuckNo.1600w400 (5).jpg', 'BeijingRoastDuck', '1', '1', '0');
+INSERT INTO `product` VALUES ('3', 'Coke chicken wing', '', '39', '/productImg/BeijingRoastDuckNo.2600w400 (1).jpg', 'BeijingRoastDuck', '0', '1', '0');
+INSERT INTO `product` VALUES ('4', 'hambarger', '', '28', '/productImg/DicosNo.0dekeshi-mihanbao-slt.jpg', 'Dicos', '0', '1', '3');
+INSERT INTO `product` VALUES ('5', 'fried chicken', '', '18', '/productImg/DicosNo.1dekeshi-zhaji-slt.jpg', 'Dicos', '1', '1', '4');
+INSERT INTO `product` VALUES ('6', 'drink', '', '15', '/productImg/DicosNo.2dekeshi-yinliao-slt.jpg', 'Dicos', '2', '1', '0');
+INSERT INTO `product` VALUES ('7', 'rice', '', '22', '/productImg/DicosNo.3dekeshi-mifan-slt.jpg', 'Dicos', '0', '1', '0');
+INSERT INTO `product` VALUES ('8', 'chicken rolls', '', '18', '/productImg/DicosNo.4dekeshi-juan-slt.jpg', 'Dicos', '0', '1', '0');
+INSERT INTO `product` VALUES ('9', 'ChickenWing', '', '30', '/productImg/MakroNo.0t01b420d92d140004b5.jpg', 'Makro', '1', '1', '1');
+INSERT INTO `product` VALUES ('10', 'porridge', '', '18', '/productImg/MakroNo.1t0161ca36ef4e5be796.jpg', 'Makro', '0', '1', '3');
+INSERT INTO `product` VALUES ('11', 'sushi', '', '14', '/productImg/MakroNo.2t0118fd890540b37564.jpg', 'Makro', '0', '1', '0');
+INSERT INTO `product` VALUES ('12', 'ChickenBreast', '', '14', '/productImg/ParksonNo.0600w400.jpg', 'Parkson', '0', '1', '0');
+INSERT INTO `product` VALUES ('13', 'Onigiri', '', '8', '/productImg/ParksonNo.1t01220611c6e3b997ab.jpg', 'Parkson', '1', '1', '0');
+INSERT INTO `product` VALUES ('14', 'PorkRibs', '', '13', '/productImg/ParksonNo.2600w400 (3).jpg', 'Parkson', '0', '1', '0');
+INSERT INTO `product` VALUES ('15', 'lemon juice', '', '28', '/productImg/StarbucksNo.0t0179867f99a3a94bd2.jpg', 'Starbucks', '2', '1', '0');
+INSERT INTO `product` VALUES ('16', 'pudding', '', '15', '/productImg/StarbucksNo.1t014e35a7bbf21d11f0.jpg', 'Starbucks', '1', '1', '0');
+INSERT INTO `product` VALUES ('17', 'coffee', '', '15', '/productImg/StarbucksNo.2t01c208993b9d2d22a7.jpg', 'Starbucks', '2', '1', '0');
+INSERT INTO `product` VALUES ('18', 'Hamburger', '', '15', '/productImg/SUBWAYNo.0t01584aadd73788c692.jpg', 'SUBWAY', '0', '1', '0');
+INSERT INTO `product` VALUES ('19', 'Pizza', '', '28', '/productImg/SUBWAYNo.1t014071cddb83758c3f.jpg', 'SUBWAY', '0', '1', '0');
+INSERT INTO `product` VALUES ('20', 'TipTop', '', '22', '/productImg/SUBWAYNo.2t0163b1b4ff68fba326.jpg', 'SUBWAY', '2', '1', '0');
+
+-- ----------------------------
+-- Table structure for `manager` 管理员
+-- ----------------------------
+DROP TABLE IF EXISTS `manager`;
+CREATE TABLE `manager` (
+  `mid` varchar(20) NOT NULL COMMENT '管理员ID',
+  `mpwd` varchar(30) DEFAULT NULL COMMENT '管理员密码',
+  `mname` varchar(30) DEFAULT NULL COMMENT '管理员名称',
+  `msex` varchar(8) DEFAULT NULL COMMENT '性别',
+  `mphone` varchar(30) DEFAULT NULL COMMENT '联系电话',
+  `maddress` varchar(300) DEFAULT NULL COMMENT '地址',
+  `memail` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `mlevel` int(11) DEFAULT NULL COMMENT '管理员等级',
+  PRIMARY KEY (`mid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of manager
+-- ----------------------------
+INSERT INTO `manager` VALUES ('admin', '1234', 'rfj', 'man', '2342244', '29#212', 'pk@qq.com', '1');
+INSERT INTO `manager` VALUES ('rfj', '1234', 'kobe', 'man', '2859576', '29#212', '784533@qq.com', '0');
+
+-- ----------------------------
+-- Table structure for `orders`   订单表
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `oid` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单编号',
+  `cid` varchar(20) DEFAULT NULL COMMENT '用户ID',
+  `sid` varchar(20) DEFAULT NULL COMMENT '卖家ID',
+  `osize` int(11) DEFAULT NULL COMMENT '类型',
+  `ototalprice` double DEFAULT NULL COMMENT '小计',
+  `orderdate` varchar(50) DEFAULT NULL COMMENT '订单日期',
+  `opaytype` int(11) DEFAULT NULL COMMENT '支付方式',
+  `ostatus` int(11) DEFAULT NULL COMMENT '订单状态',
+  `oname` varchar(30) DEFAULT NULL COMMENT '名字',
+  `oaddress` varchar(300) DEFAULT NULL COMMENT '地址',
+  `ophone` varchar(30) DEFAULT NULL COMMENT '电话',
+  `oemail` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  PRIMARY KEY (`oid`),
+  KEY `cid` (`cid`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `customer` (`cid`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `seller` (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of orders   订单记录
+-- ----------------------------
+INSERT INTO `orders` VALUES ('1', 'rfj', 'Dicos', '2', '48', '2015-01-04 21:20:46', '2', '2', 'rfj', '33#309', '42236134', '21425@stt.com');
+INSERT INTO `orders` VALUES ('2', 'qdl', 'BeijingRoastDuck', '2', '326', '2015-01-04 21:23:44', '3', '0', 'qdl', '33#311', '2142634', '243484923@qq.com');
+INSERT INTO `orders` VALUES ('3', 'wgm', 'BeijingRoastDuck', '2', '337', '2015-01-04 21:28:27', '1', '2', 'wgm', '33#311', '2154141', '231287@120.com');
+INSERT INTO `orders` VALUES ('4', 'rfj', 'Dicos', '2', '125', '2015-01-04 21:30:08', '3', '0', 'cpk', '33#309', '2142634', '243484923@qq.com');
+INSERT INTO `orders` VALUES ('5', 'rfj', 'Dicos', '2', '140', '2015-01-04 22:23:55', '2', '1', 'cpk', '33#311', '2142634', '243484923@qq.com');
+INSERT INTO `orders` VALUES ('6', 'rfj', 'Dicos', '2', '46', '2015-01-07 13:31:51', '2', '2', 'rfj', '33#311', '2154141', '231287@120.com');
+
+-- ----------------------------
+-- Table structure for `order_item`   订单项表
+-- ----------------------------
+DROP TABLE IF EXISTS `order_item`;
+CREATE TABLE `order_item` (
+  `nid` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `oid` int(11) DEFAULT NULL COMMENT '订单ID',
+  `prod_id` int(11) DEFAULT NULL COMMENT '商品ID',
+  `pname` varchar(30) DEFAULT NULL COMMENT '商品名称',
+  `pdescription` varchar(300) DEFAULT NULL COMMENT '商品描述',
+  `pprice` double DEFAULT NULL COMMENT '单价',
+  `pimg` varchar(300) DEFAULT NULL COMMENT '商品图片',
+  `ncount` int(11) DEFAULT NULL COMMENT '商品数量',
+  `ntotalprice` double DEFAULT NULL COMMENT '小计',
+  PRIMARY KEY (`nid`),
+  KEY `oid` (`oid`),
+  KEY `prod_id` (`prod_id`),
+  CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`),
+  CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`prod_id`) REFERENCES `product` (`prod_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of order_item  订单项记录
+-- ----------------------------
+INSERT INTO `order_item` VALUES ('1', '3', '1', 'BeijingDuck', '', '298', '/productImg/BeijingRoastDuckNo.0t01c78fb8a9b7a2fdaf.jpg', '1', '298');
+INSERT INTO `order_item` VALUES ('2', '3', '3', 'Coke chicken wing', '', '39', '/productImg/BeijingRoastDuckNo.2600w400 (1).jpg', '1', '39');
+INSERT INTO `order_item` VALUES ('3', '4', '4', 'hambarger', '', '28', '/productImg/DicosNo.0dekeshi-mihanbao-slt.jpg', '2', '56');
+INSERT INTO `order_item` VALUES ('4', '4', '5', 'fried chicken', '', '18', '/productImg/DicosNo.1dekeshi-zhaji-slt.jpg', '3', '54');
+INSERT INTO `order_item` VALUES ('5', '4', '6', 'drink', '', '15', '/productImg/DicosNo.2dekeshi-yinliao-slt.jpg', '1', '15');
+INSERT INTO `order_item` VALUES ('6', '5', '4', 'hambarger', '', '28', '/productImg/DicosNo.0dekeshi-mihanbao-slt.jpg', '2', '56');
+INSERT INTO `order_item` VALUES ('7', '5', '5', 'fried chicken', '', '18', '/productImg/DicosNo.1dekeshi-zhaji-slt.jpg', '2', '36');
+INSERT INTO `order_item` VALUES ('8', '5', '6', 'drink', '', '15', '/productImg/DicosNo.2dekeshi-yinliao-slt.jpg', '2', '30');
+INSERT INTO `order_item` VALUES ('9', '5', '8', 'chicken rolls', '', '18', '/productImg/DicosNo.4dekeshi-juan-slt.jpg', '1', '18');
+INSERT INTO `order_item` VALUES ('10', '6', '4', 'hambarger', '', '28', '/productImg/DicosNo.0dekeshi-mihanbao-slt.jpg', '1', '28');
+INSERT INTO `order_item` VALUES ('11', '6', '5', 'fried chicken', '', '18', '/productImg/DicosNo.1dekeshi-zhaji-slt.jpg', '1', '18');
+
+-- ----------------------------
+-- Table structure for `sales_promotion` 
+-- ----------------------------
+DROP TABLE IF EXISTS `sales_promotion`;
+CREATE TABLE `sales_promotion` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `pname` varchar(30) DEFAULT NULL,
+  `pstartime` varchar(50) DEFAULT NULL,
+  `pendtime` varchar(50) DEFAULT NULL,
+  `pdescription` varchar(300) DEFAULT NULL,
+  `pstatus` int(11) DEFAULT NULL,
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sales_promotion
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `seller` 卖家
+-- ----------------------------
+DROP TABLE IF EXISTS `seller`;
+CREATE TABLE `seller` (
+  `sid` varchar(20) NOT NULL COMMENT '卖家编号',
+  `spwd` varchar(30) DEFAULT NULL COMMENT '密码',
+  `sname` varchar(30) DEFAULT NULL COMMENT '卖家名称',
+  `sphone` varchar(30) DEFAULT NULL COMMENT '联系电话',
+  `saddress` varchar(300) DEFAULT NULL COMMENT '卖家地址',
+  `sdescription` varchar(300) DEFAULT NULL COMMENT '卖家描述',
+  `semail` varchar(50) DEFAULT NULL COMMENT '卖家邮箱',
+  `spraise` int(11) DEFAULT NULL COMMENT '卖家赞数',
+  `sregdate` varchar(50) DEFAULT NULL COMMENT '注册时间',
+  `slastdate` varchar(50) DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`sid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of seller   卖家记录
+-- ----------------------------
+INSERT INTO `seller` VALUES ('BeijingRoastDuck', '11111', 'Beijing Roast Duck', '2576859', 'China', 'roast duck', '77777@126.com', '0', '2015-01-04 20:14:26', '2015-01-07 13:36:24');
+INSERT INTO `seller` VALUES ('Dicos', '22222', 'Dicos', '2071809', 'America', 'hambarger', '33333@126.com', '5', '2015-01-04 20:05:43', '2015-01-07 13:49:16');
+INSERT INTO `seller` VALUES ('Makro', '33333', 'Makro', '2335566', 'China', 'supermarket', '55555@126.com', '3', '2015-01-04 20:10:46', '2015-01-07 13:38:05');
+INSERT INTO `seller` VALUES ('Parkson', '44444', 'Parkson', '246647', 'India', 'supermarkey', '66666@126.com', '0', '2015-01-04 20:12:40', '2015-01-07 13:41:27');
+INSERT INTO `seller` VALUES ('Starbucks', '55555', 'Starbucks', '2784533', 'America', 'coffee', '11111@163.com', '0', '2015-01-04 20:00:06', '2015-01-07 13:45:01');
+INSERT INTO `seller` VALUES ('SUBWAY', '66666', 'SUBWAY', '2658493', 'America', 'snack', '99999@126.com', '0', '2015-01-04 20:17:15', '2015-01-07 13:46:39');

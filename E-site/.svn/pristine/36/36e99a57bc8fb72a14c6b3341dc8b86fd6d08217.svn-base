@@ -1,0 +1,144 @@
+<%@ page language="java" contentType="text/html;charset=gb2312" %>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+	<title>用户资料</title>
+	<script language="javascript" src="<c:url value='/js/calendar.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+</head>
+<body>
+<div id="container">
+  <div id="globalHeader">
+  <p id="logo"><a href="#"><img src="<c:url value='/images/logo.jpg' />" alt="logo" /></a></p>
+  <ul id="globalTopNav">
+      <li><a href="<c:url value='/Customer_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/Customer_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li><a href="<c:url value='/Seller_Login.jsp' />" >店家管理</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+</div>
+<div id="globalNav">
+  <ul>
+    <li><a href="<c:url value='/Show.jsp' />">首页</a></li>
+    <li id="currentPage"><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+    <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+  </ul>
+</div>
+<div id="urHere" class="globalModule globalFrame" style="margin-top:10px">
+    <h3>当前位置: <a href="<c:url value='/Show.jsp' />">首页</a> <code>&gt;</code> 用户中心</h3>
+</div>
+<div id="globalLeft">
+<div class="globalModule">
+  <h3>会员中心</h3>
+  <ul class="listStyle">
+    <li><a href="<c:url value='/Customer/Change_Info.jsp' />">用户信息</a></li>
+    <li><a href="<c:url value='/Customer/Change_Pass.jsp' />">修改密码</a></li>
+    <li><a href="<c:url value='/Cart.jsp' />">查看购物车</a></li>
+    <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />">我的订单</a></li>
+    <li><a href="<c:url value='/servlet/LogoutServlet?act=user' />">退出</a></li>
+  </ul>
+</div>
+</div>
+<div id="globalBigRight">
+	<div class="globalModule">
+        <h3>用户资料修改</h3>
+        <div class="globalModuleContent">
+          <form name="formEdit" action="<c:url value='/servlet/UpdateServlet' />" method="post" onsubmit="return checkUpdateInfoForm();">
+            <table cellspacing="0" class="tableList">
+              <tr>
+                <th width="100">用&nbsp;&nbsp;户&nbsp;&nbsp;名:</th>
+                <td> <input name="suser" type="text" class="textInput2" size="30" maxlength="30" readonly="readonly" value="${sessionScope.user.cid}" /></td>
+              </tr>
+              <tr>
+                <th>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</th>
+                <td>
+                <c:choose>
+                	<c:when test="${sessionScope.user.csex=='man'}">
+                	<input type="radio" name="ssex" value="man" checked="checked" />男&nbsp;<input type="radio" name="ssex" value="woman" />女
+                	</c:when>
+                	<c:otherwise>
+                	<input type="radio" name="ssex" value="man" />男&nbsp;<input type="radio" name="ssex" value="woman" checked="checked" />女
+                	</c:otherwise>
+                </c:choose>
+                </td>
+              </tr>
+              <tr>
+                <th>真实姓名:</th>
+                <td>
+                  <input name="sname" type="text" class="textInput" size="30" maxlength="30" value="${sessionScope.user.cname}" /></td>
+              </tr>
+
+              <tr>
+                <th>电子邮箱:</th>
+                <td><input name="semail" type="text" size="30" class="textInput" value="${sessionScope.user.cemail}" /></td>
+              </tr>
+              <tr>
+                <th>电话号码:</th>
+                <td><input name="sphone" type="text" size="30" class="textInput" value="${sessionScope.user.cphone}" /></td>
+              </tr>
+              <tr>
+                <th>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</th>
+                <td><input name="saddress" type="text" size="30" class="textInput" value="${sessionScope.user.caddress}"/></td>
+              </tr>
+
+              <tr>
+                <th>注册时间:</th>
+                <td><input name="dregdate" type="text" size="30" class="textInput2" value="${sessionScope.user.cregdate}" readonly="readonly" /></td>
+              </tr>
+              <tr>
+                <th>最后登陆:</th>
+                <td><input name="dlastdate" type="text" size="30" class="textInput2" value="${sessionScope.user.clastdate}" readonly="readonly" /></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>
+                  <input type="hidden" name="fromPage" value="/Customer/Change_Info.jsp" />
+                  <input type="hidden" name="msg" value="/msg.jsp" />
+                  <input type="hidden" name="act" value="updateInfo" />
+                  <input name="submit" type="submit" value="确定修改" />
+                </td>
+              </tr>
+            </table>
+          </form>
+		</div>
+	</div>
+</div>
+<div id="globalFooter">
+<div id="footerLine"><img src="<c:url value='/images/footer_line.gif' />" alt="" /></div>
+    <p id="footerNav">
+      <a href="#" >免责条款</a> 
+        |
+      <a href="#" >隐私保护</a> 
+        |
+      <a href="#" >咨询热点</a> 
+        |
+      <a href="#" >联系我们</a> 
+        |
+      <a href="#" >公司简介</a> 
+        |
+      <a href="#" >预留功能</a> 
+        |
+      <a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a> 
+    </p>
+</div></div>
+  <script language="javascript">
+        var email_empty = "Email地址不能为空";
+        var email_format = "Email 地址无效";
+		var phone_empty = "电话号码不能为空";
+		var phone_format = "电话号码格式错误";
+  </script>
+</body>
+</html>

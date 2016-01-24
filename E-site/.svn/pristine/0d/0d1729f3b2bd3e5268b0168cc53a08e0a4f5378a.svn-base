@@ -1,0 +1,123 @@
+<%@ page language="java" contentType="text/html;charset=gb2312" %>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld" %>
+<c:choose>
+<c:when test="${not empty param.suser}">
+	<c:if test="${userBean==null}">
+		<script language="javascript">
+            location.href="<c:url value='/servlet/ProductEinfoServlet?suser=" + "${param.suser}" + "&fromPage=/Admin/Product_Einfo1.jsp' />";
+        </script>
+    </c:if>
+</c:when>
+<c:when test="${not empty param.msg}">
+	<script type="text/javascript" language="javascript">
+		alert("${param.msg}");
+		location.href="<c:url value='/Admin/Product_Info.jsp?suser=${param.username}' />";
+	</script>
+</c:when>
+<c:otherwise>
+	<script language="javascript">
+		location.href="<c:url value='/Admin/Product_List1.jsp' />";
+	</script>
+</c:otherwise>
+</c:choose>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	<title>管理中心 - 修改资料 </title>
+	<link href="<c:url value="/Admin/styles/general.css" />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value="/Admin/styles/main.css" />" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="<c:url value="/js/user.js" />"></script>
+
+</head>
+<body>
+<h1>
+<span class="action-span"><a href="<c:url value="/Admin/Product_Info.jsp?suser=${param.suser}" />">资料显示</a></span>
+<span class="action-span"><a href="<c:url value="/Admin/Product_Einfo1.jsp?suser=${param.suser}" />">资料修改</a>&nbsp;&nbsp;</span>
+<span class="action-span"><a href="<c:url value="/Admin/Product_List1.jsp" />">商品列表</a>&nbsp;&nbsp;</span>
+<span><a href="<c:url value="/Admin/Admin_Main.jsp" />">管理中心</a>  - 商品资料修改 </span>
+</h1><div class="main-div1">
+<table width="100%" class="btable">
+    <tr>
+        <td><form name="foodEdit" action="<c:url value="/servlet/ProductEinfoServlet" />" method="post" onsubmit="return checkSellerEditFood();" enctype="multipart/form-data">
+            <table cellspacing="0" class="tableList">
+              <tr>
+                <th width="100">商品编号:</th>
+                <td> <input name="fid" type="text" maxlength="30" readonly="readonly" value="${userBean.fid}" /></td>
+              </tr>
+              <tr>
+                <th>商品名称:</th>
+                <td>
+                  <input name="fname" type="text" maxlength="30" value="${userBean.fname}" /></td>
+              </tr>
+              <tr>
+                <th>商品单价:</th>
+                <td><input name="fprice" type="text" value="${userBean.fprice}" /></td>
+              </tr>
+                            <tr>
+                <th>商品分类:</th>
+                <td>
+                <c:choose>
+                	<c:when test="${userBean.ftype=='0'}">
+                	<input type="radio" name="ftype" value="0" checked="checked" />食物&nbsp;
+                	<input type="radio" name="ftype" value="1" />衣服&nbsp;
+                	<input type="radio" name="ftype" value="2" />数码产品
+                	</c:when>
+                	<c:when test="${userBean.ftype=='1'}">
+                	<input type="radio" name="ftype" value="0"  />食物&nbsp;
+                	<input type="radio" name="ftype" value="1" checked="checked"/>衣服&nbsp;
+                	<input type="radio" name="ftype" value="2" />数码产品
+                	</c:when>
+                	<c:otherwise>
+                	<input type="radio" name="ftype" value="0" />食物&nbsp;
+                	<input type="radio" name="ftype" value="1" />衣服&nbsp;
+                	<input type="radio" name="ftype" value="2" checked="checked" />数码产品
+                	</c:otherwise>
+                </c:choose>
+                </td>
+              </tr>
+              <tr>
+               <th>点&nbsp;&nbsp;赞:</th>
+                <td><input name="fpraise" type="text" value="${userBean.fpraise}" readonly="readonly"/></td>
+              </tr>
+              <tr>
+               <th>商品描述:</th>
+                <td><textarea name="fdescription" cols="30" rows="6">${userBean.fdescription}</textarea></td>
+              </tr>
+              <tr>
+                <th>商品图片：</th>
+                  <td align="left">&nbsp;
+          	           <input type="hidden" name="oldimg" id="oldimg" value="${userBean.fimg}" />
+                       <input type="file" name="fimg" id="fimg" title="图片格式只能是.jpg .gif .png .bmp" />
+                  </td>
+              </tr>
+ 
+              <tr>
+                <th>&nbsp;</th>
+                <td>
+                  <input type="hidden" name="fromPage" value="/Admin/Product_Einfo1.jsp" />
+                  <input name="submit" type="submit" value="确定修改" />
+                </td>
+              </tr>
+            </table>
+          </form></td>
+    </tr>
+</table>
+</div>
+<div id="footer">版权所有 &copy;E-site</div>
+<script language="javascript" >
+  <!--
+        var mcname_empty = "商品名称不能为空。";
+		var mcprice_empty = "商品单价不能为空";
+		var mcprice_msg = "商品价格只能为浮点数";
+		var mcimg_msg = "图片格式错误.请重新选择商品图片.\n\n图片格式只能为 gif jpg png bmp";
+		var Type_empty = "请选择商品类别";
+		var mcimg_empty = "请选择商品图片文件\n\n或点击不使用商品图片"
+	-->
+</script>
+</body>
+</html>

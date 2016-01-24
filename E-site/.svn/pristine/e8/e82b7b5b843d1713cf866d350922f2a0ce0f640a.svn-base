@@ -1,0 +1,257 @@
+package com.es.dao.bean;
+
+import java.io.Serializable;
+
+/**
+ * 定义了一个类UserBean,实现了Serializable接口,用于设置用户信息.
+
+ */
+public class sellerBean implements Serializable {
+
+	/**
+	 * 生成serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 用户名
+	 */
+	private String sid;
+
+	/**
+	 * 用户密码
+	 */
+	private String spwd;
+
+	/**
+	 * 用户姓名
+	 */
+	private String sname;
+
+	/**
+	 * 用户电话号码
+	 */
+	private String sphone;
+
+	/**
+	 * 用户地址
+	 */
+	private String saddress;
+	/**
+	 *  描述
+	 */
+	private String sdescription;
+	/**
+	 * 用户email地址
+	 */
+	private String semail;
+	/**
+	 * 添加点赞数目
+	 */
+	private int spraise;
+
+	/**
+	 * 用户注册时间
+	 */
+	private String sregdate;
+
+
+	/**
+	 * 用户最后登陆时间
+	 */
+	private String slastdate;
+
+
+	/**
+	 * 用于获取用户最后登陆时间
+	 * 
+	 * @return 最后登陆时间
+	 */
+	public String getSlastdate() {
+		return slastdate;
+	}
+
+	/**
+	 * 用于设置用户最后登陆时间
+	 * 
+	 * @param slastdate
+	 *            最后登陆时间
+	 */
+	public void setSlastdate(String slastdate) {
+		this.slastdate = slastdate;
+	}
+
+	/**
+	 * 用于获取用户注册时间
+	 * 
+	 * @return 注册时间
+	 */
+	public String getSregdate() {
+		return sregdate;
+	}
+
+	/**
+	 * 用于设置用户注册时间
+	 * 
+	 * @param sregdate
+	 *            注册时间
+	 */
+	public void setSregdate(String sregdate) {
+		this.sregdate = sregdate;
+	}
+
+	/**
+	 * 用于获取用户住址
+	 * 
+	 * @return 用户住址
+	 */
+	public String getSaddress() {
+		return saddress;
+	}
+
+	/**
+	 * 用于设置用户住址
+	 * 
+	 * @param saddress
+	 *            用户住址
+	 */
+	public void setSaddress(String saddress) {
+		this.saddress = saddress;
+	}
+
+
+
+	/**
+	 * 用于获取用户Email地址
+	 * 
+	 * @return Email地址
+	 */
+	public String getSemail() {
+		return semail;
+	}
+
+	/**
+	 * 用于设置用户Email地址
+	 * 
+	 * @param semail
+	 *            Email地址
+	 */
+	public void setSemail(String semail) {
+		this.semail = semail;
+	}
+
+
+	/**
+	 * 用于获取用户姓名
+	 * 
+	 * @return 用户姓名
+	 */
+	public String getSname() {
+		return sname;
+	}
+
+	/**
+	 * 用于设置用户姓名
+	 * 
+	 * @param cname
+	 *            用户姓名
+	 */
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	/**
+	 * 用于获取用户电话号码
+	 * 
+	 * @return 电话号码
+	 */
+	public String getSphone() {
+		return sphone;
+	}
+
+	/**
+	 * 用于设置用户电话号码
+	 * 
+	 * @param sphone
+	 *            电话号码
+	 */
+	public void setSphone(String sphone) {
+		this.sphone = sphone;
+	}
+
+	/**
+	 * 用于获取用户密码
+	 * 
+	 * @return 用户密码
+	 */
+	public String getSpwd() {
+		return spwd;
+	}
+
+	/**
+	 * 用于设置用户密码
+	 * 
+	 * @param cpwd
+	 *            用户密码
+	 */
+	public void setSpwd(String spwd) {
+		this.spwd = spwd;
+	}
+
+
+
+	/**
+	 * 用于获取用户名
+	 * 
+	 * @return 用户名
+	 */
+	public String getSid() {
+		return sid;
+	}
+
+	/**
+	 * 用于设置用户名
+	 * 
+	 * @param sid
+	 *            用户名
+	 */
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	/**
+	 * 描述
+	 * 
+	 * @return 描述
+	 */
+	public String getSdescription() {
+		return sdescription;
+	}
+
+	/**
+	 * 描述
+	 * 
+	 * @param pdescription
+	 *            描述
+	 */
+	public void setSdescription(String sdescription) {
+		this.sdescription = sdescription;
+	}
+	
+	/**
+	 * 获取点赞数目
+	 * 
+	 * @return 点赞数目
+	 */
+	public int getSpraise() {
+		return spraise;
+	}
+
+	/**
+	 * 设置点赞数目
+	 * 
+	 * @param fpraise
+	 *            点赞数目
+	 */
+	public void setSpraise(int spraise) {
+		this.spraise = spraise;
+	}
+}

@@ -1,0 +1,157 @@
+<%@ page language="java" contentType="text/html;charset=gb2312" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	<title>Menu</title>
+	<link href="styles/general.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+    body {
+      background: #80BDCB;
+    }
+    #tabbar-div {
+      background: #278296;
+      padding-left: 10px;
+      height: 21px;
+      padding-top: 0px;
+    }
+    #tabbar-div p {
+      margin: 1px 0 0 0;
+    }
+    .tab-front {
+      background: #80BDCB;
+      line-height: 20px;
+      font-weight: bold;
+      padding: 4px 15px 4px 18px;
+      border-right: 2px solid #335b64;
+      cursor: hand;
+      cursor: pointer;
+    }
+    #main-div {
+      border: 1px solid #345C65;
+      padding: 5px;
+      margin: 5px;
+      background: #FFF;
+    }
+    #menu-list {
+      padding: 0;
+      margin: 0;
+    }
+    #menu-list ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      color: #335B64;
+    }
+    #menu-list li {
+      padding-left: 16px;
+      line-height: 16px;
+      cursor: hand;
+      cursor: pointer;
+    }
+    #main-div a:visited, #menu-list a:link, #menu-list a:hover {
+      color: #335B64
+      text-decoration: none;
+    }
+    #menu-list a:active {
+      color: #EB8A3D;
+    }
+    .explode {
+      background: url(images/menu_minus.gif) no-repeat 0px 3px;
+      font-weight: bold;
+    }
+    .collapse {
+	  background: url(images/menu_plus.gif) no-repeat 0px 3px;
+  	  font-weight: bold;
+	}
+    .menu-item {
+      background: url(images/menu_arrow.gif) no-repeat 0px 3px;
+      font-weight: normal;
+    }
+    </style>
+</head>
+<body>
+<div id="tabbar-div">
+<p><span style="float:right; padding: 3px 5px;" ><img src="images/menu_minus.gif" alt="闭合" name="toggleImg" width="9" height="9" border="0" id="toggleImg" style="cursor: hand;" /></span>
+  <span class="tab-front" id="menu-tab">菜单</span></p>
+</div>
+<div id="main-div">
+<div id="menu-list">
+<ul>
+  <li class="explode" name="menu" id="img_1">
+    <span onclick="toggleCollapse(1);">店家管理</span>
+		<ul id="collapse_1">
+		<li class="menu-item"><a href="Seller_Add.jsp" target="main-frame">添加店家</a></li>
+        <li class="menu-item"><a href="Seller_List.jsp" target="main-frame">店家列表</a></li>
+        </ul>
+  </li>
+  <li class="explode" name="menu" id="img_2">
+    <span onclick="toggleCollapse(2);">公告管理</span>
+		<ul id="collapse_2">
+		<li class="menu-item"><a href="Notice_Add.jsp" target="main-frame">添加公告</a></li>
+        <li class="menu-item"><a href="Notice_List.jsp" target="main-frame">公告列表</a></li>
+        </ul>
+  </li>
+  <li class="explode" name="menu" id="img_3">
+    <span onclick="toggleCollapse(3);">会员管理</span>
+		<ul id="collapse_3">
+        <li class="menu-item"><a href="Customer_List.jsp" target="main-frame">会员列表</a></li>
+        </ul>
+  </li>
+  <li class="explode" name="menu" id="img_4">
+    <span onclick="toggleCollapse(4);">admin管理</span>
+		<ul id="collapse_4">
+        <li class="menu-item"><a href="Admin_Add.jsp" target="main-frame">添加管理员</a></li>
+        <li class="menu-item"><a href="Admin_List.jsp" target="main-frame">管理员列表</a></li>
+        </ul>
+  </li>
+</ul>
+</div>
+<div id="help-div" style="display:none">
+<h1 id="help-title"></h1>
+<div id="help-content"></div>
+</div>
+</div>
+	<script language="javascript">
+	<!--
+	document.getElementById('toggleImg').onclick = function() {
+	  if(document.getElementById('toggleImg').alt == "展开") {
+	 	  for(i=1;i<5;i++){
+		 	  var item = document.getElementById('collapse_'+i);
+		 	  var explodebg = document.getElementById('img_'+i);
+		 	  item.style.display = "";
+		 	  document.getElementById('toggleImg').src='images/menu_minus.gif';
+		 	  document.getElementById('toggleImg').alt='闭合';
+		 	  explodebg.className="explode";
+	 	  }
+	  } else {
+	 	  for(i=1;i<5;i++){
+		 	  var item = document.getElementById('collapse_'+i);
+		 	  var explodebg = document.getElementById('img_'+i);
+		 	  item.style.display = "none";
+		 	  document.getElementById('toggleImg').src='images/menu_plus.gif';
+		 	  document.getElementById('toggleImg').alt='展开';
+		 	  explodebg.className="collapse";
+	 	  }
+	   }
+	 }
+ 	
+ 	function toggleCollapse(e){
+ 		  var item = document.getElementById('collapse_'+e);
+	 	  var explodebg = document.getElementById('img_'+e);
+	 	  if(item.style.display == "none") {
+	 	  	item.style.display = "";
+	 	  	explodebg.className="explode";
+	 	  } else {
+	 	  	item.style.display ="none";
+	 	  	explodebg.className="collapse";
+	 	  }
+ 	}
+	-->
+	</script>
+</body>
+</html>

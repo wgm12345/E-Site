@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>es</display-name>
+	<welcome-file-list>
+
+		<welcome-file>Show.jsp</welcome-file>
+
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.es.servlet.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/servlet/LoginServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MainServlet</servlet-name>
+		<servlet-class>com.es.servlet.MainServlet</servlet-class>
+		 <init-param>
+         <param-name>pageSize</param-name>
+         <param-value>10</param-value>
+	     </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MainServlet</servlet-name>
+		<url-pattern>/servlet/MainServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CartServlet</servlet-name>
+		<servlet-class>com.es.servlet.CartServlet</servlet-class>
+		 <init-param>
+         <param-name>pageSize</param-name>
+         <param-value>10</param-value>
+	     </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CartServlet</servlet-name>
+		<url-pattern>/servlet/CartServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>OrderServlet</servlet-name>
+		<servlet-class>com.es.servlet.OrderServlet</servlet-class>
+		 <init-param>
+         <param-name>pageSize</param-name>
+         <param-value>10</param-value>
+	     </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderServlet</servlet-name>
+		<url-pattern>/servlet/OrderServlet</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.es.servlet.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/servlet/LogoutServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>RegServlet</servlet-name>
+		<servlet-class>com.es.servlet.RegServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegServlet</servlet-name>
+		<url-pattern>/servlet/RegServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>UpdateServlet</servlet-name>
+		<servlet-class>com.es.servlet.UpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateServlet</servlet-name>
+		<url-pattern>/servlet/UpdateServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminLoginServlet</servlet-name>
+		<servlet-class>com.es.servlet.AdminLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLoginServlet</servlet-name>
+		<url-pattern>/servlet/AdminLoginServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>EditAdminServlet</servlet-name>
+		<servlet-class>com.es.servlet.EditAdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditAdminServlet</servlet-name>
+		<url-pattern>/servlet/EditAdminServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminRegServlet</servlet-name>
+		<servlet-class>com.es.servlet.AdminRegServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminRegServlet</servlet-name>
+		<url-pattern>/servlet/AdminRegServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SellerRegServlet</servlet-name>
+		<servlet-class>com.es.servlet.SellerRegServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SellerRegServlet</servlet-name>
+		<url-pattern>/servlet/SellerRegServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+
+	<servlet>
+		<servlet-name>AdminManageServlet</servlet-name>
+		<servlet-class>com.es.servlet.AdminManageServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminManageServlet</servlet-name>
+		<url-pattern>/servlet/AdminManageServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CustomerManageServlet</servlet-name>
+		<servlet-class>com.es.servlet.CustomerManageServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CustomerManageServlet</servlet-name>
+		<url-pattern>/servlet/CustomerManageServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>NoticeManageServlet</servlet-name>
+		<servlet-class>com.es.servlet.NoticeManageServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeManageServlet</servlet-name>
+		<url-pattern>/servlet/NoticeManageServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>SellerManageServlet</servlet-name>
+		<servlet-class>com.es.servlet.SellerManageServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SellerManageServlet</servlet-name>
+		<url-pattern>/servlet/SellerManageServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>SellerLoginServlet</servlet-name>
+		<servlet-class>com.es.servlet.SellerLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SellerLoginServlet</servlet-name>
+		<url-pattern>/servlet/SellerLoginServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>EditSellerServlet</servlet-name>
+		<servlet-class>com.es.servlet.EditSellerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditSellerServlet</servlet-name>
+		<url-pattern>/servlet/EditSellerServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ProductAddServlet</servlet-name>
+		<servlet-class>com.es.servlet.ProductAddServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProductAddServlet</servlet-name>
+		<url-pattern>/servlet/ProductAddServlet</url-pattern>
+	</servlet-mapping>
+
+	
+	
+	<servlet>
+		<servlet-name>ProductManageServlet</servlet-name>
+		<servlet-class>com.es.servlet.ProductManageServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductManageServlet</servlet-name>
+		<url-pattern>/servlet/ProductManageServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ProductEinfoServlet</servlet-name>
+		<servlet-class>com.es.servlet.ProductEinfoServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductEinfoServlet</servlet-name>
+		<url-pattern>/servlet/ProductEinfoServlet</url-pattern>
+	</servlet-mapping>
+	
+<servlet>
+		<servlet-name>OrderManageServlet</servlet-name>
+		<servlet-class>com.es.servlet.OrderManageServlet</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>15</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderManageServlet</servlet-name>
+		<url-pattern>/servlet/OrderManageServlet</url-pattern>
+	</servlet-mapping>
+  
+  <filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>
+  		org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+  	</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>*.action</url-pattern>
+  </filter-mapping></web-app>

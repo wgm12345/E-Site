@@ -1,0 +1,120 @@
+﻿package com.es.servlet;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.es.bo.Cart;
+import com.es.bo.Mc;
+import com.es.dao.bean.customerBean;
+import com.es.dao.bean.order_itemBean;
+import com.es.dao.bean.ordersBean;
+import com.es.dao.factory.DAOFactory;
+import com.es.dao.pub.PublicStrIsNull;
+/**
+ * 用于前台下订单，订单列表，订单明细，订单查询等。
+ */
+public class OrderServlet extends MyServlet {
+
+	private static final long serialVersionUID = 1L;
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = PublicStrIsNull.isNullStr(request.getParameter("act"));
+		System.out.println("chengg");
+		if(action.equals("sendorder")) {
+			System.out.println("cheng");
+			HttpSession session = request.getSession();
+			customerBean cb=(customerBean)session.getAttribute("user");
+			String sid=(String)session.getAttribute("sid");
+			Cart cart = (Cart)session.getAttribute("mcCart");
+			ordersBean orderBean = new ordersBean();
+			orderBean.setOtotalprice(cart.getTotalPrice());
+			orderBean.setCid(cb.getCid());
+			orderBean.setSid(sid);
+			orderBean.setOname(PublicStrIsNull.isNullStr(request.getParameter("ssname")));
+			orderBean.setOaddress(PublicStrIsNull.isNullStr(request.getParameter("ssaddress")));
+			orderBean.setOphone(PublicStrIsNull.isNullStr(request.getParameter("ssphone")));
+			orderBean.setOemail(PublicStrIsNull.isNullStr(request.getParameter("ssemail")));
+			orderBean.setOrderdate(PublicStrIsNull.isNullStr(request.getParameter("dgdate")));
+			//初始状态为2
+			orderBean.setOsize(Integer.parseInt(PublicStrIsNull.isNullStr(request.getParameter("size"))));
+			orderBean.setOstatus(Integer.parseInt(PublicStrIsNull.isNullStr("2")));
+			orderBean.setOpaytype(Integer.parseInt(PublicStrIsNull.isNullStr(request.getParameter("paymode"))));
+			DAOFactory.createOrdersDAO().insertOrder(orderBean);
+			orderBean.setOid(DAOFactory.createOrdersDAO().getCount());
+			Collection con = cart.getMcMap().values();
+			for (Object object : con) {
+				Mc mc = (Mc)object;
+				order_itemBean orderItemBean = new order_itemBean();
+				orderItemBean.setOid(orderBean.getOid());
+				orderItemBean.setFid(Integer.parseInt(mc.getMcBean().getFid()));
+				orderItemBean.setFname(mc.getMcBean().getFname());
+				orderItemBean.setFdescription(mc.getMcBean().getFdescription());
+				orderItemBean.setFimg(mc.getMcBean().getFimg());
+				orderItemBean.setNcount(mc.getCount());
+				orderItemBean.setFprice(Double.parseDouble(mc.getMcBean().getFprice()));
+				orderItemBean.setNtotalprice(Double.parseDouble(mc.getMcBean().getFprice())*mc.getCount());
+				DAOFactory.createOrderItemDAO().insertOrderItem(orderItemBean);
+			}
+			session.removeAttribute("mcCart");
+			String msg = "下单成功，3 秒后自动进入用户中心查看订单列表!";
+			
+			response.sendRedirect(request.getContextPath() + "/msg.jsp" + "?fromPage=Customer/Show_Orderlist.jsp" + "&msg="
+					+ java.net.URLEncoder.encode(msg, "UTF-8"));
+			return;
+		} else if(action.equals("orderList")) {
+			String fromPage = PublicStrIsNull.isNullStr(request.getParameter("fromPage"));
+			String sstatus_str = PublicStrIsNull.isNullStr(request.getParameter("sstatus"));
+			int sstatus=-1;
+			try{
+				sstatus=Integer.parseInt(sstatus_str);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			HttpSession session = request.getSession();
+			customerBean cb=(customerBean)session.getAttribute("user");
+			if(cb!=null){
+				String scuser = cb.getCid();
+				int recordSize = DAOFactory.createOrdersDAO().getCount(-1, scuser,null, sstatus, null, null);
+				int pastart = pagingHandle(request, recordSize)[0];
+				int paend = pagingHandle(request, recordSize)[1];
+				if(pastart<=0)pastart=1;
+				List list = DAOFactory.createOrdersDAO().searchOrder(-1, scuser, null, sstatus,  null, null, pastart, paend);
+				request.setAttribute("orderList", list);
+				if(sstatus_str != null && !sstatus_str.equals(""))
+					request.setAttribute("sstatus", sstatus);
+				request.getRequestDispatcher(fromPage).forward(request, response);
+			}else{
+				String msg = "还未登陆，请先登陆。。。";
+				fromPage = request.getContextPath() + "/Customer_Login.jsp";
+				response.sendRedirect(request.getContextPath() + "/msg.jsp"
+						+ "?fromPage="
+						+ fromPage
+						+ "&msg="
+						+ java.net.URLEncoder.encode(msg,
+								"UTF-8"));
+			}
+		} else if(action.equals("orderItem")) {
+			String fromPage = PublicStrIsNull.isNullStr(request.getParameter("fromPage"));
+			int orderId = Integer.parseInt(request.getParameter("orderId"));
+			ordersBean orderBean = DAOFactory.createOrdersDAO().searchOrder(orderId);
+			List orderItemList = DAOFactory.createOrderItemDAO().searchOrderItem(orderId);
+			request.setAttribute("orderBean", orderBean);
+			request.setAttribute("orderItemList",orderItemList);
+			request.getRequestDispatcher(fromPage).forward(request, response);
+		}
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doPost(request,response);
+	}
+
+}

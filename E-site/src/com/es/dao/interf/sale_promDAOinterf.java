@@ -1,0 +1,81 @@
+﻿package com.es.dao.interf;
+import java.util.List;
+
+import com.es.dao.bean.sale_promBean;
+/**
+ *公告管理
+ * 
+ */
+//pid,pname,pstartime,pendtime,pdescription
+public interface sale_promDAOinterf {
+
+	/**
+	 * 查询信息.
+	 * 
+	 * @param pid
+	 *            (精确查)编号
+	 * @param pname
+	 *            (模糊查)名
+	 *            	 * @param pastart
+	 *            记录 开始行 
+	 * @param paend
+	 *            记录 结束行 
+	 * @return 集合.
+	 */
+	public List<sale_promBean> searchSP(int pid, String pname,int pastart, int paend);
+
+	/**
+	 * 查询信息.
+	 * 
+	 * @param pid
+	 *            (精确查)编号
+	 * @return 集合.
+	 */
+	public sale_promBean searchSP(int pid);
+
+	/**
+	 * 添加.
+	 * 
+	 * @param sale_p
+	 *            对象.
+	 * @return 添加是否成功.
+	 */
+	public boolean insertSP(sale_promBean sale_p);
+
+	/**
+	 * 修改
+	 * 
+	 * @param sale_p
+	 *            商品类别对象.
+	 * @return 修改是否成功.
+	 */
+	public boolean updateSP(sale_promBean sale_p);
+
+	/**
+	 * 删除
+	 * 
+	 * @param pid
+	 *            编号.
+	 * @return 操作是否成功.
+	 */
+	public boolean deleteSP(int pid);
+	
+	/**
+	 * 获取公告总数.
+	 * 
+	 * @return 公告总数.
+	 */
+	public int getCount();
+	
+	/**
+	 * 获取用户总数.
+	 * 
+	 * @param pid
+	 *            公告号(精确查) (null:表无此条件).
+	 * @param pname
+	 *            公告名(模糊查) (null:表无此条件).
+	 * @return 公告总数.
+	 */
+	public int getCount(int pid, String pname);
+
+}

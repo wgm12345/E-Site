@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<c:if test="${sessionScope.user==null}">
+	<c:redirect url="msg.jsp">
+		<c:param name="fromPage" value="Customer_Login.jsp"></c:param>
+		<c:param name="success" value="Paymode.jsp"></c:param>
+		<c:param name="msg" value="You must first check the landing system, automatically after 3 seconds into the landing interface"></c:param>
+	</c:redirect>
+</c:if>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="images/css/style.css" rel="stylesheet" type="text/css" />
+		<title>选择支付方式和发货方式</title>
+	</head>
+	<body>
+		<div id="container">
+			<div id="globalHeader">
+				<p id="logo">
+					<a href="#"><img src="<c:url value='/images/logo.jpg' />" alt="logo" />
+					</a>
+				</p>
+  <ul id="globalTopNav">
+      <li><a href="<c:url value='/Customer_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/Customer_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li><a href="<c:url value='/Seller_Login.jsp' />" >店家管理</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+			</div>
+			<div id="globalNav">
+				<ul>
+					<li id="currentPage">
+						<a href="<c:url value='/Show.jsp' />">首页</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a>
+					</li>
+				</ul>
+			</div>
+			<div id="urHere" class="globalModule globalFrame"
+				style="margin-top:10px">
+				<h3>
+					当前位置:
+					<a href="<c:url value='/Show.jsp' />">首页</a>
+					<code>
+						&gt;
+					</code>
+					选择付款方式
+				</h3>
+			</div>
+			<div id="globalLogin" class="globalModule globalFrame">
+				<h3>
+					会员登陆
+				</h3>
+				<form name="paymode" action="<c:url value='/Customer/Pay.jsp' />" method="get" >
+					<div class="globalModuleContent">
+						<ul class="login">
+							<li>
+								付款方式：
+								<select name="spaytype" style="width:130px;">
+                                <option value="1">货到付款</option>
+                                <option value="2">支付宝</option>
+                                <option value="3">财付通</option>
+                                </select>
+							</li>
+							<li>
+								<input type="image" src="<c:url value='images/cartnext.gif' />" alt="下一步进入下单资料填写" />
+                                <span onClick="javascript:location.href='Show.jsp'" style="cursor:hand"><img src="<c:url value='/images/cart_c.gif' />" alt="点击返回首页继续购物" /></span>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div id="globalFooter">
+				<div id="footerLine">
+					<img src="<c:url value='/images/footer_line.gif' />" alt="" />
+				</div>
+				<p id="footerNav">
+					<a href="#">免责条款</a> |
+					<a href="#">隐私保护</a> |
+					<a href="#">咨询热点</a> |
+					<a href="#">联系我们</a> |
+					<a href="#">公司简介</a> |
+					<a href="#">预留功能</a> |
+					<a href="<c:url value='/Admin_Login.jsp' />">后台管理</a>
+				</p>
+			</div>
+		</div>
+<script language="javascript">
+  <!--
+		var username_empty = "用户名不能为空。";
+		var password_empty = "登录密码不能为空。";
+		var rand_msg = "验证码只能是4位数!"
+	-->
+</script>
+	</body>
+</html>

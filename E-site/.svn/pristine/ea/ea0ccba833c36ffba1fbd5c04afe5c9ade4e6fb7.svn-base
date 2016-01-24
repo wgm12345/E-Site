@@ -1,0 +1,276 @@
+<%@ page language="java" contentType="text/html;charset=gb2312"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+		<link href="<c:url value='/images/css/style.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/main.css' />" rel="stylesheet" type="text/css" />
+		<link href="<c:url value='/css/reset.css' />" rel="stylesheet" type="text/css" />
+	
+		<title>购物车</title>
+        <script language="javascript">
+			function updateMc(nid,count) {
+				var newCountid = "newCount_" + nid.toString();
+				var newCount=document.getElementById(newCountid).value;
+				if(newCount != count) {
+					if(newCount>0) {
+						if(confirm('您确定要修改购买商品的数量吗？')) {
+							location.href="<c:url value='/servlet/CartServlet?fromPage=/Cart.jsp'/>&nid=" + nid + "&newCount="+ newCount +"&act=updateFood";
+						}
+					} else {
+						alert("商品数量不能小于1,如果不想购买请点击删除按钮 ");
+						document.getElementById('mcCount').value=count;
+					}
+				} else {
+					alert("您并没有修改商品数量！");
+				}
+			}
+			
+			function deleteMc(nid) {
+				if(confirm('您确实要把该商品移出购物车吗？')) {
+					location.href="<c:url value='/servlet/CartServlet?fromPage=/Cart.jsp'/>&nid=" + nid + "&act=deleteFood";
+				}
+			}
+			
+			function clearMc(nid) {
+			//${param.id} el表达式
+			    if(${mcCart!=null}) {
+				   if(${mcCart.mcCount!=0}) {
+					   if(confirm('您确定要清空购物车吗？')) {
+						   location.href="<c:url value='/servlet/CartServlet?fromPage=/Cart.jsp'/>&act=clearFood";
+					   }
+				    } else {
+					    alert("Failure!No goods.");
+				    }
+			    } else {
+					alert("Failure!No goods.");
+				}
+			}
+			
+			function addOrder() {
+			    if(${mcCart!=null}) {
+				   if(${mcCart.mcCount!=0}) {
+					   location.href="<c:url value='/Paymode.jsp'/>";
+				   } else {
+					   alert("购物车内并没有商品，不能结账");
+				   }
+				} else {
+					alert("Failure!No goods.");
+				}
+			}
+			
+			function onKeyUpdateMc(nid,count){
+				if(event.keyCode==13){
+					updateMc(nid,count);
+				}
+			}
+		</script>
+	</head>
+	<body>
+
+		<div id="container">
+			<div id="globalHeader">
+				<p id="logo">
+					<a href="<c:url value='/Show.jsp' />"><img src="<c:url value='/images/logo.jpg' />" alt="logo" />
+					</a>
+				</p>
+  <ul id="globalTopNav">
+      <li><a href="<c:url value='/Customer_Reg.jsp' />" >用户注册</a></li>
+      <li><a href="<c:url value='/Customer_Login.jsp' />" >用户登陆</a></li>
+      <li><a href="<c:url value='/Customer/Change_Info.jsp' />" >会员中心</a></li>
+      <li><a href="<c:url value='/Cart.jsp' />" >购物车</a></li>
+      <li><a href="<c:url value='/Customer/Show_Orderlist.jsp' />" >查看订单</a></li>
+      <li><a href="<c:url value='/Seller_Login.jsp' />" >店家管理</a></li>
+      <li id="globalTopNavLast"><a href="<c:url value='/Admin_Login.jsp' />" >后台管理</a></li>
+      <li id="globalTopNavRight">&nbsp;</li>
+  </ul>
+			</div>
+			<div id="globalNav">
+				<ul>
+					<li id="currentPage">
+						<a href="<c:url value='/Show.jsp' />">首页</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Change_Info.jsp' />">会员中心</a>
+					</li>
+					<li>
+						<a href="<c:url value='/Customer/Show_Orderlist.jsp' />">查看订单</a>
+					</li>
+				</ul>
+			</div>
+			<div id="ECS_MEMBERZONE">
+				<c:choose>
+					<c:when test="${sessionScope.user ne null}">
+						<span class="welcome">您好，${sessionScope.user.cid}，欢迎回来!</span>
+						<span class="btnList"><a
+							href="<c:url value='/Customer/Change_Info.jsp' />">进入用户中心</a><a
+							href="<c:url value='/servlet/LogoutServlet?act=user' />">退出</a> </span>
+					</c:when>
+					<c:when test="${sessionScope.user==null}">
+						<form id="ECS_LOGINFORM" name="loginUser" method="post" action="<c:url value='/servlet/LoginServlet' />" onSubmit="return checkLoginForm();">
+							用户名：
+							<input name="suser" type="text" size="8" tabindex="1"
+								value="${cookie.suser.value}" class="textInput textInputSign" />
+							密码：
+							<input name="spwd" type="password" size="10" tabindex="2"
+								class="textInput textInputSign" />
+							验证码：
+							<input name="rand" type="text" class="textInput textCaptcha"
+								size="4" maxlength="4" />
+							&nbsp;
+							<img src="<c:url value='/inc/rand.jsp' />" onclick="this.src='<c:url value='/inc/rand.jsp' />'" class="imgrand" />
+							<input type="image" src="<c:url value='/images/btn_signin.gif' />" />
+							<input type="hidden" name="fromPage" value="Show.jsp" />
+							<input type="hidden" name="msg" value="/msg.jsp" />
+							<span onclick="javascript:location.href='<c:url value='/Customer_Reg.jsp' />';" style="cursor:hand;">
+                            <img src="<c:url value='/images/btn_register.gif' />" alt="注册新用户" /></span>
+						</form>
+					</c:when>
+				</c:choose>
+			</div>
+    <div id="urHere" class="globalModule globalFrame">
+      <h3>当前位置: <a href="<c:url value='/Show.jsp' />">首页</a> <code>&gt;</code> 购物车</h3>
+    </div>
+    
+    <!-- 收货地址模块 -->
+    <div class="shoppingCart comWidth">
+	<div class="shopping_item">
+		<h3 class="shopping_tit">收货地址</h3>
+		<div class="shopping_cont padding_shop">
+			<ul class="shopping_list">
+				<li><span class="shopping_list_text"><em>*</em>选择地区：</span>
+					<div class="select">
+						<h3>海淀区五环内</h3><span></span>
+						<ul class="show_select">
+							<li>上帝</li>
+							<li>五道口</li>
+							<li>上帝</li>
+						</ul>
+					</div>
+				</li>
+				<li><span class="shopping_list_text"><em>*</em>详细地址：</span><input value="最多输入20个汉字" class="input input_b" type="text"></li>
+				<li><span class="shopping_list_text"><em>*</em>收 货 人：</span><input value="最多10个" class="input" type="text"></li>
+				<li><span class="shopping_list_text"><em>*</em>手	机：</span><input value="如：12312312" class="input" type="text"><span class="cart_tel">&nbsp;或固定电话：</span><input class="input input_s" type="text"><span class="jian">-</span><input class="input input_s2" type="text"><span class="jian">-</span><input class="input input_s2" type="text"></li>
+				<li><input class="affirm" type="button"></li>
+			</ul>
+		</div>
+	</div>
+	<div class="hr_25"></div>
+	
+	<!-- 支付模块 -->
+	<div class="shopping_item">
+		<h3 class="shopping_tit">支付方式</h3>
+		<div class="shopping_cont padding_shop">
+			<ul class="shopping_list">
+				<input type="radio" name="sex" value="male" /> 现金支付
+				<br />
+				<input type="radio" name="sex" value="female" /> 支付宝
+			</ul>
+		</div>
+	</div>
+	
+	
+	
+	<div class="hr_25"></div>
+	<!-- 购物篮模块 -->
+	<div class="shopping_item">
+		<h3 class="shopping_tit">送货清单<a href="#" class="backCar">返回购物车修改</a></h3>
+		<div class="shopping_cont pb_10">
+			<div class="cart_inner">
+				<div class="cart_head clearfix">
+					<div class="cart_item t_name">商品名称</div>
+					<div class="cart_item t_price">单价</div>
+					<!--  <div class="cart_item t_return">返现</div>-->
+					<div class="cart_item t_num">数量</div>
+					<div class="cart_item t_subtotal">小计</div>
+					<div class="cart_item t_subtotal">操作</div>
+				</div>
+				<c:forEach var="mcMap" items="${mcCart.mcMap}" >
+	<c:set var="mc" value="${mcMap.value}" />
+				<div class="cart_cont clearfix">
+					<div class="cart_item t_name">
+						<div class="cart_shopInfo clearfix">
+							<img src="<c:url value='${mc.mcBean.fimg}' />" alt="">
+							<div class="cart_shopInfo_cont">
+								<p class="cart_link"><a href="#">${mc.mcBean.fname}</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="cart_item t_price">
+						￥${mc.mcBean.fprice}
+					</div>
+					<!--  <div class="cart_item t_return">返现</div>-->
+					<div class="cart_item t_num"><input type="text" value="${mc.count}" id="newCount_${mc.mcBean.fid}" class="textInput" onkeydown="onKeyUpdateMc(${mc.mcBean.fid},${mc.count});" />
+                <span onclick="updateMc(${mc.mcBean.fid},${mc.count});" style="cursor:hand;">
+                <img src="<c:url value='/images/icon_edit.gif' />" alt="点击修改购买商品数！" />
+                </span>
+                </div>
+					<div class="cart_item t_subtotal">￥${mc.mcBean.fprice*mc.count}</div>
+					<div class="cart_item t_subtotal"><span onclick="deleteMc(${mc.mcBean.fid});" style="cursor:hand;"><img src="<c:url value='/images/no.gif' />" alt="点击删除此商品" /></span></div>
+				</div>
+				</c:forEach>
+
+			</div>
+		</div>
+	</div>
+	<div class="hr_25"></div>
+	<div class="shopping_item">
+		<h3 class="shopping_tit">订单结算</h3>
+		<div class="shopping_cont padding_shop clearfix">
+			<div>
+				<i>共有：</i><span>${mcCart.mcTypeCount}样商品</span>
+			</div>
+			<div>
+				<i>共有：</i><span>${mcCart.mcCount}件</span>
+			</div>
+			<div class="cart_count fr">
+				<div class="cart_rmb">
+					<i>总计：</i><span>￥${mcCart.totalPrice}</span>
+				</div>
+				<div class="cart_btnBox">
+					<input class="cart_btn" style="cursor:pointer" value="提交订单" type="button">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="hr_25"></div>
+    
+    <!-- 提交模块 -->
+    	<div class="shopping_item">
+		<h3 class="shopping_tit">订单结算</h3>
+		<div class="shopping_cont padding_shop clearfix">
+			 <span style="float:left;">
+                <a href="/EaterNet/Show.jsp"><img src="<c:url value='/images/cart_c.gif' />" alt="点击返回首页继续购物" /></a>
+                <span onclick="clearMc()" style="cursor:hand;"><img src="<c:url value='/images/cart_q.gif' />" alt="清空商品" /></span>
+                <span onclick="addOrder()" style="cursor:hand;"><img src="<c:url value='/images/cartbuy.png' />" align="结账下订单" /></span>
+                </span>
+	</div>
+</div>
+<div class="hr_25"></div>
+    
+ 
+    	<!-- 页尾 -->
+		
+				<div id="footerLine">
+					<img src="<c:url value='/images/footer_line.gif' />" alt="" />
+				</div>
+				<p id="footerNav">
+					<a href="#">免责条款</a> |
+					<a href="#">隐私保护</a> |
+					<a href="#">咨询热点</a> |
+					<a href="#">联系我们</a> |
+					<a href="#">公司简介</a> |
+					<a href="#">预留功能</a> |
+					<a href="<c:url value='/Admin_Login.jsp' />">后台管理</a>
+				</p>
+		
+		
+	</body>
+</html>

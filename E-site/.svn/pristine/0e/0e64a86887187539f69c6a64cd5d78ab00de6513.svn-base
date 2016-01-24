@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html;charset=gb2312" %>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld" %>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+	<meta http-equiv="expires" content="Wed, 26 Feb 1970 08:21:57 GMT" />
+	<title>管理中心 - 添加公告 </title>
+	<link href="<c:url value='/Admin/styles/general.css' />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value='/Admin/styles/main.css' />" rel="stylesheet" type="text/css" />
+    <script language="javascript" src="<c:url value='/js/calendar.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/user.js' />"></script>
+
+</head>
+<body>
+<h1>
+<span class="action-span"><a href="<c:url value='/Admin/Notice_List.jsp' />">公告列表</a></span>
+<span><a href="<c:url value='/Admin/Admin_Main.jsp ' />">管理中心</a>  - 添加公告 </span>
+</h1>
+<div class="main-div">
+<form method="post"  action="<c:url value='/servlet/NoticeManageServlet' />">
+<table width="100%" >
+  <tr>
+    <td class="label">公&nbsp;告&nbsp;名:</td>
+    <td><input name="pname" type="text" maxlength="30" /></td>
+  </tr>
+  <tr>
+    <td class="label">描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:</td>
+    <td><input name="pdescription" type="text" class="textInput" maxlength="300" /></td>
+  </tr>
+  <tr>
+     <td class="label">开始时间:</td>
+     <td><input name="pstartime" type="text" maxlength="50" class="textInput"/></td>
+     <td class="label">( 格式形如：2014-12-17 22:45:28 )</td>
+  </tr>
+  <tr>
+      <td class="label">结束时间:</td>
+      <td><input name="pendtime" type="text" maxlength="50" class="textInput"/></td>
+      <td class="label">( 格式形如： 2014-12-17 22:45:28 )</td>
+  </tr>
+
+  <tr>
+  	<td align="right">
+  	  <input name="submit" type="submit" value="添加" class="button" />
+      <input type="hidden" name="act" value="noticeadd" />
+      <input type="hidden" name="fromPage" value="/Admin/Notice_Add.jsp" />
+    </td>
+    <td align="left"><input type="reset" value=" 重置 " class="button" /></td>
+  </tr>
+</table>
+</form>
+</div>
+<c:choose>
+	<c:when test="${not empty param.msg}">
+	    <c:if test="${not empty param.success}">
+        	<script language="javascript">
+        		alert('${param.msg}');
+            	location.href="<c:url value="/Admin/Notice_List.jsp" />";
+            </script>
+        </c:if>
+    	<script language="javascript">
+    		alert('${param.msg}');
+    		location.href="<c:url value="/Admin/Notice_Add.jsp" />";
+    	</script>
+        <c:if test="${not empty param.success}">
+        	<script language="javascript">
+            	location.href="<c:url value="/Admin/Notice_List.jsp" />";
+            </script>
+        </c:if>
+    </c:when>
+</c:choose>
+<div id="footer">版权所有 &copy;两把刷子小组</div>
+</body>
+</html>

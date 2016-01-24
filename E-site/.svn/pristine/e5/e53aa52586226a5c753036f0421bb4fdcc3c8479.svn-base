@@ -1,0 +1,141 @@
+package com.es.dao.bean;
+
+import java.io.Serializable;
+
+public class sale_promBean implements Serializable {
+
+	/**
+	 * 生成serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 编号
+	 */
+	private int pid;
+
+	/**
+	 * 状态
+	 */
+	private int pstatus;
+	/**
+	 * 名称
+	 */
+	private String pname;
+
+
+	/**
+	 *开始时间
+	 */
+	private String pstartime;
+	/**
+	 *  结束时间
+	 */
+	private String pendtime;
+	/**
+	 *  描述
+	 */
+	private String pdescription;
+
+	/**
+	 * 获取编号
+	 * 
+	 * @return 编号
+	 */
+	public int getPid() {
+		return pid;
+	}
+
+	/**
+	 * 设置编号
+	 * 
+	 * @param pid
+	 *            类别编号
+	 */
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+
+	public int getPstatus() {
+		return pstatus;
+	}
+
+	public void setPstatus(int pstatus) {
+		this.pstatus = pstatus;
+	}
+
+
+	/**
+	 * 获取名称
+	 * 
+	 * @return 名称
+	 */
+	public String getPname() {
+		return pname;
+	}
+
+	/**
+	 * 设置名称
+	 * 
+	 * @param pname
+	 *            名称
+	 */
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	/**
+	 * 开始时间
+	 * 
+	 * @return 开始时间
+	 */
+	public String getPstartime() {
+		return pstartime;
+	}
+
+	/**
+	 * 设置开始时间
+	 * 
+	 * @param pstartime
+	 *            开始时间
+	 */
+	public void setPstartime(String pstartime) {
+		this.pstartime = pstartime;
+	}
+	/**
+	 * 结束时间
+	 * 
+	 * @return 结束时间
+	 */
+	public String getPendtime() {
+		return pendtime;
+	}
+
+	/**
+	 * 设置结束时间
+	 * 
+	 * @param pendtime
+	 *            结束时间
+	 */
+	public void setPendtime(String pendtime) {
+		this.pendtime = pendtime;
+	}
+	
+	/**
+	 * 描述
+	 * 
+	 * @return 描述
+	 */
+	public String getPdescription() {
+		return pdescription;
+	}
+
+	/**
+	 * 描述
+	 * 
+	 * @param pdescription
+	 *            描述
+	 */
+	public void setPdescription(String pdescription) {
+		this.pdescription = pdescription;
+	}
+}
